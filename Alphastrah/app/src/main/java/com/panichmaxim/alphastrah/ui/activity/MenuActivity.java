@@ -12,7 +12,12 @@ import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.ui.fragment.PoliciesFragment;
 import com.panichmaxim.alphastrah.ui.fragment.ProfileFragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
+
+    @Bind(R.id.drawer_layout) DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,20 +25,20 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ButterKnife.bind(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         findViewById(R.id.profile_fragment).setOnClickListener(this);
         findViewById(R.id.policies_fragment).setOnClickListener(this);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PoliciesFragment()).commit();
+        setTitle(getString(R.string.title_policies));
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -43,7 +48,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.START);
         switch(v.getId()) {
             case R.id.profile_fragment:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();

@@ -3,6 +3,9 @@ package com.panichmaxim.alphastrah.ui.activity;
 import android.annotation.TargetApi;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
@@ -16,16 +19,23 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import com.panichmaxim.alphastrah.R;
+import com.panichmaxim.alphastrah.controller.network.GsonFactory;
+import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
+import com.panichmaxim.alphastrah.controller.network.ServerApi;
+import com.panichmaxim.alphastrah.controller.network.request.EstablishSessionRequest;
+import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
+import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
+import com.panichmaxim.alphastrah.utils.SimpleStorage;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    private UserLoginTask mAuthTask = null;
+    private UserLoginTask authTask = null;
 
-    @Bind(R.id.email) AutoCompleteTextView mEmailView;
-    @Bind(R.id.password) EditText mPasswordView;
-    @Bind(R.id.login_progress) View mProgressView;
-    @Bind(R.id.login_form) View mLoginFormView;
+    @Bind(R.id.email) AutoCompleteTextView emailView;
+    @Bind(R.id.password) EditText passwordView;
+    @Bind(R.id.login_progress) View progressView;
+    @Bind(R.id.login_form) View loginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,56 +44,53 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         findViewById(R.id.email_sign_in_button).setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                attemptLogin();
+            public void onClick(View view) {attemptLogin();
             }
         });
     }
 
     private void attemptLogin() {
-        if (mAuthTask != null) return;
+        if (authTask != null) return;
 
         // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
+        emailView.setError(null);
+        passwordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = emailView.getText().toString();
+        String password = passwordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
-            mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mPasswordView;
+            passwordView.setError(getString(R.string.error_field_required));
+            focusView = passwordView;
             cancel = true;
         } else if (!isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            passwordView.setError(getString(R.string.error_invalid_password));
+            focusView = passwordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            emailView.setError(getString(R.string.error_field_required));
+            focusView = emailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            emailView.setError(getString(R.string.error_invalid_email));
+            focusView = emailView;
             cancel = true;
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute();
+            authTask = new UserLoginTask(email, password);
+            authTask.execute();
         }
     }
 
@@ -95,78 +102,75 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            loginFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, ServerResponse<AuthorizeResponse>> {
 
-        private final String mEmail;
-        private final String mPassword;
+        private final String email;
+        private final String password;
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+            this.email = email;
+            this.password = password;
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+        protected ServerResponse<AuthorizeResponse> doInBackground(Void... params) {
+            RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+            ServerApi serverApi = restAdapter.create(ServerApi.class);
+            ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(email, password));
+            if (response.isSuccessful() && response.getData() != null) {
+                SimpleStorage storage = SimpleStorage.getInstance();
+                storage.saveAuthInfo((response.getData()).getSession(), (response.getData()).getAccount());
+                storage.setPassword(this.password);
             }
-            return true;
+            return response;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
+        protected void onPostExecute(final ServerResponse<AuthorizeResponse> response) {
+            authTask = null;
             showProgress(false);
-            if (success) {
+            if (response != null) {
                 Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                // TODO
+                passwordView.setError(getString(R.string.error_incorrect_password));
+                passwordView.requestFocus();
             }
         }
 
         @Override
         protected void onCancelled() {
-            mAuthTask = null;
+            authTask = null;
             showProgress(false);
         }
     }

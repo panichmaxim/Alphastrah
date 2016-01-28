@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Alphastrah</string>
+
+    <string name="navigation_drawer_open">Открыть navigation drawer</string>
+    <string name="navigation_drawer_close">Закрыть navigation drawer</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_policies">Полисы</string>
+    <string name="title_activity_login">Войти</string>
+    <string name="title_loading">Загрузка</string>
+
+    <!-- Strings related to login -->
+    <string name="login_error">Ошибка при авторизации</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войти</string>
+    <string name="error_invalid_email">Email адрес неверный</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Неверный пароль</string>
+    <string name="error_field_required">Обязательное поле</string>
+</resources>

@@ -4,26 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/layout_margin"
+    android:layout_margin="@dimen/list_item_insurance_magrin_left"
     card_view:cardCornerRadius="4dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layout_marginLeft"
+            android:layout_marginLeft="@dimen/list_item_insurance_magrin_left"
             android:orientation="vertical">
 
-            <TextView
+            <com.panichmaxim.alphastrah.ui.utils.FontTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/background_material_dark"
-                android:textSize="@dimen/description_size"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_size"
                 android:textStyle="bold" />
 
 
-            <TextView
+            <com.panichmaxim.alphastrah.ui.utils.FontTextView
                 android:id="@+id/property"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

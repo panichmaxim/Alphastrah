@@ -44,5 +44,5 @@ public class UserLoginTask extends AsyncTask<Void, Void, ServerResponse<Authoriz
     protected void onPostExecute(final ServerResponse<AuthorizeResponse> response) {
         listener.loginCompleted(response);
     }
-    
+
 }

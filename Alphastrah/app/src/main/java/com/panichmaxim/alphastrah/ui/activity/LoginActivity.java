@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
@@ -12,10 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
@@ -48,7 +45,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         // Reset errors.
         emailView.setError(null);
         passwordView.setError(null);
-
         // Store values at the time of the login attempt.
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();

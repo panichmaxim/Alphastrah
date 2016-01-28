@@ -15,7 +15,6 @@ public final class SimpleStorage {
     private final SharedPreferences preferences;
     private final Gson gson;
 
-    private final String VERSION = "VERSION";
     private final String TOKEN = "TOKEN";
     private final String SESSION = "SESSION";
     private final String ACCOUNT = "ACCOUNT";
@@ -37,16 +36,6 @@ public final class SimpleStorage {
             }
         }
         return localInstance;
-    }
-
-    public final void setPreferenceVersion(int version) {
-        SharedPreferences.Editor ed = preferences.edit();
-        ed.putInt(VERSION, version);
-        ed.commit();
-    }
-
-    public final int getPreferenceVersion() {
-        return this.preferences.getInt(VERSION, -1);
     }
 
     public final void logout() {

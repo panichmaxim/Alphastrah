@@ -1,4 +1,4 @@
-package com.panichmaxim.alphastrah.model.network.auth;
+package com.panichmaxim.alphastrah.model.network.objects;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

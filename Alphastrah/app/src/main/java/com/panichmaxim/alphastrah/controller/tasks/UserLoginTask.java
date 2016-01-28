@@ -17,32 +17,32 @@ public class UserLoginTask extends AsyncTask<Void, Void, ServerResponse<Authoriz
         void loginCompleted(ServerResponse<AuthorizeResponse> response);
     }
 
-    private LoginTaskListener listener;
-    private final String email;
-    private final String password;
+    private LoginTaskListener mListener;
+    private final String mEmail;
+    private final String mPassword;
 
     public UserLoginTask(String email, String password, LoginTaskListener listener) {
-        this.email = email;
-        this.password = password;
-        this.listener = listener;
+        this.mEmail = email;
+        this.mPassword = password;
+        this.mListener = listener;
     }
 
     @Override
     protected ServerResponse<AuthorizeResponse> doInBackground(Void... params) {
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
         ServerApi serverApi = restAdapter.create(ServerApi.class);
-        ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(email, password));
+        ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(mEmail, mPassword));
         if (response.isSuccessful() && response.getData() != null) {
             SimpleStorage storage = SimpleStorage.getInstance();
             storage.saveAuthInfo((response.getData()).getSession(), (response.getData()).getAccount());
-            storage.setPassword(this.password);
+            storage.setPassword(this.mPassword);
         }
         return response;
     }
 
     @Override
     protected void onPostExecute(final ServerResponse<AuthorizeResponse> response) {
-        listener.loginCompleted(response);
+        mListener.loginCompleted(response);
     }
 
 }

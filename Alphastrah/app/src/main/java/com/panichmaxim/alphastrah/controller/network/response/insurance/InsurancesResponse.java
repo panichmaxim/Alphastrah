@@ -7,10 +7,10 @@ import java.util.List;
 
 public class InsurancesResponse {
     @SerializedName("insurance_list")
-    private List<Insurance> insurances;
+    private List<Insurance> mInsurances;
 
     @NonNull
     public List<Insurance> getInsurances() {
-        return this.insurances;
+        return this.mInsurances;
     }
 }

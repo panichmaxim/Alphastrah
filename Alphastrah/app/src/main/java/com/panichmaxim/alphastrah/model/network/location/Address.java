@@ -7,33 +7,33 @@ import com.google.gson.annotations.SerializedName;
 
 public class Address {
     @SerializedName("city")
-    private String city;
+    private String mCity;
     @SerializedName("country")
-    private String country;
+    private String mCountry;
     @SerializedName("index")
-    private String index;
+    private String mIndex;
     @SerializedName("street_house_apartment")
-    private String localAddress;
+    private String mLocalAddress;
 
 
     @Nullable
     public String getIndex() {
-        return this.index;
+        return this.mIndex;
     }
 
     @Nullable
     public String getCountry() {
-        return this.country;
+        return this.mCountry;
     }
 
     @NonNull
     public String getCity() {
-        return this.city;
+        return this.mCity;
     }
 
     @NonNull
     public String getLocalAddress() {
-        return this.localAddress;
+        return this.mLocalAddress;
     }
 
 }

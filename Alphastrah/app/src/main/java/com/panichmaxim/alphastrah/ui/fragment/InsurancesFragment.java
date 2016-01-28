@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 
 public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<Insurance>, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    private InsuranceListAdapter adapter;
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    private InsuranceListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +33,9 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
         super.onViewCreated(view, savedInstance);
         ButterKnife.bind(this, view);
         contentView.setOnRefreshListener(this);
-        adapter = new InsuranceListAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
+        mAdapter = new InsuranceListAdapter();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
         loadData(false);
     }
 
@@ -56,8 +56,8 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
 
     @Override
     public void setData(List<Insurance> data) {
-        adapter.setData(data);
-        adapter.notifyDataSetChanged();
+        mAdapter.setData(data);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

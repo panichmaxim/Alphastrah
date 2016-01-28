@@ -9,8 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.panichmaxim.alphastrah.R;
-import com.panichmaxim.alphastrah.ui.fragment.PoliciesFragment;
-import com.panichmaxim.alphastrah.ui.fragment.ProfileFragment;
+import com.panichmaxim.alphastrah.ui.fragment.InsurancesFragment;
+import com.panichmaxim.alphastrah.ui.fragment.AccountFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +33,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.profile_fragment).setOnClickListener(this);
         findViewById(R.id.policies_fragment).setOnClickListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PoliciesFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new InsurancesFragment()).commit();
         setTitle(getString(R.string.title_policies));
     }
 
@@ -51,11 +51,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         drawer.closeDrawer(GravityCompat.START);
         switch(v.getId()) {
             case R.id.profile_fragment:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new AccountFragment()).commit();
                 setTitle(getString(R.string.title_profile));
                 break;
             case R.id.policies_fragment:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new PoliciesFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new InsurancesFragment()).commit();
                 setTitle(getString(R.string.title_policies));
                 break;
         }

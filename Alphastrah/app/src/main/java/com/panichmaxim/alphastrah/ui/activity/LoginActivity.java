@@ -3,14 +3,11 @@ package com.panichmaxim.alphastrah.ui.activity;
 import android.annotation.TargetApi;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import butterknife.OnClick;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,19 +15,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.panichmaxim.alphastrah.R;
-import com.panichmaxim.alphastrah.controller.network.GsonFactory;
-import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
-import com.panichmaxim.alphastrah.controller.network.ServerApi;
-import com.panichmaxim.alphastrah.controller.network.request.EstablishSessionRequest;
 import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
-import com.panichmaxim.alphastrah.utils.SimpleStorage;
+import com.panichmaxim.alphastrah.presenter.LoginPresenter;
+import com.panichmaxim.alphastrah.ui.view.LoginView;
 
 
-public class LoginActivity extends AppCompatActivity {
-
-    private UserLoginTask authTask = null;
+public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 
     @Bind(R.id.email) AutoCompleteTextView emailView;
     @Bind(R.id.password) EditText passwordView;
@@ -42,16 +36,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        findViewById(R.id.email_sign_in_button).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {attemptLogin();
-            }
-        });
     }
 
-    private void attemptLogin() {
-        if (authTask != null) return;
+    @Override
+    public LoginPresenter createPresenter(){
+        return new LoginPresenter();
+    }
 
+    @OnClick(R.id.email_sign_in_button)
+    public void signInButtonClicked(){
         // Reset errors.
         emailView.setError(null);
         passwordView.setError(null);
@@ -89,8 +82,21 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            authTask = new UserLoginTask(email, password);
-            authTask.execute();
+            presenter.attemptLogin(email, password);
+        }
+    }
+
+    @Override
+    public void loginCompleted(ServerResponse<AuthorizeResponse> response){
+        showProgress(false);
+        if (response != null) {
+            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            // TODO
+            passwordView.setError(getString(R.string.login_error));
+            passwordView.requestFocus();
         }
     }
 
@@ -130,49 +136,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, ServerResponse<AuthorizeResponse>> {
-
-        private final String email;
-        private final String password;
-
-        UserLoginTask(String email, String password) {
-            this.email = email;
-            this.password = password;
-        }
-
-        @Override
-        protected ServerResponse<AuthorizeResponse> doInBackground(Void... params) {
-            RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
-            ServerApi serverApi = restAdapter.create(ServerApi.class);
-            ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(email, password));
-            if (response.isSuccessful() && response.getData() != null) {
-                SimpleStorage storage = SimpleStorage.getInstance();
-                storage.saveAuthInfo((response.getData()).getSession(), (response.getData()).getAccount());
-                storage.setPassword(this.password);
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(final ServerResponse<AuthorizeResponse> response) {
-            authTask = null;
-            showProgress(false);
-            if (response != null) {
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            } else {
-                // TODO
-                passwordView.setError(getString(R.string.error_incorrect_password));
-                passwordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            authTask = null;
-            showProgress(false);
-        }
-    }
 }
 

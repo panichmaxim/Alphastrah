@@ -7,13 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 import com.panichmaxim.alphastrah.R;
+import com.panichmaxim.alphastrah.controller.adapter.InsuranceListAdapter;
 import com.panichmaxim.alphastrah.model.network.insurance.Insurance;
 import com.panichmaxim.alphastrah.presenter.InsurancesPresenter;
-import com.panichmaxim.alphastrah.view.InsurancesView;
-import java.util.ArrayList;
+import com.panichmaxim.alphastrah.ui.view.InsurancesView;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +21,7 @@ import butterknife.ButterKnife;
 public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<Insurance>, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    private InsurancesAdapter adapter;
+    private InsuranceListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
         super.onViewCreated(view, savedInstance);
         ButterKnife.bind(this, view);
         contentView.setOnRefreshListener(this);
-        adapter = new InsurancesAdapter();
+        adapter = new InsuranceListAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         loadData(false);
@@ -84,51 +83,5 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
         contentView.setRefreshing(pullToRefresh);
     }
 
-    private class InsurancesAdapter extends RecyclerView.Adapter<InsurancesAdapter.ViewHolder> {
 
-        private List<Insurance> nodes = new ArrayList<>();
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            private TextView title;
-            private TextView property;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                title = (TextView) itemView.findViewById(R.id.title);
-                property = (TextView) itemView.findViewById(R.id.property);
-            }
-
-        }
-
-        // http://stackoverflow.com/questions/24885223/why-doesnt-recyclerview-have-onitemclicklistener-and-how-recyclerview-is-dif
-        private class MyOnClickListener implements View.OnClickListener {
-            @Override
-            public void onClick(View v) {
-                //
-            }
-        }
-
-        public void setData(List<Insurance> nodes) {
-            this.nodes = nodes;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_insurance, parent, false);
-            v.setOnClickListener(new MyOnClickListener());
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.title.setText(this.nodes.get(position).getTitle());
-            holder.property.setText(this.nodes.get(position).getInsuredObject());
-        }
-
-        @Override
-        public int getItemCount() {
-            return this.nodes.size();
-        }
-    }
 }

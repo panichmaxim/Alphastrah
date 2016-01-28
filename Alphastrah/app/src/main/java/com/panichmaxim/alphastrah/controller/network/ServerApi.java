@@ -1,6 +1,8 @@
 package com.panichmaxim.alphastrah.controller.network;
 
 import android.support.annotation.NonNull;
+
+import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -15,5 +17,5 @@ public interface ServerApi {
     ServerResponse<AuthorizeResponse> authorize(@Body @NonNull EstablishSessionRequest establishSessionRequest);
 
     @GET("/insurances")
-    ServerResponse<InsurancesResponse> getInsurances();
+    void getInsurances(Callback<ServerResponse<InsurancesResponse>> callback);
 }

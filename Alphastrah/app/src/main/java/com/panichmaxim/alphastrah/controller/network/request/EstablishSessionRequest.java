@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class EstablishSessionRequest {
     @SerializedName("login")
-    private final String login;
+    private final String mLogin;
     @SerializedName("password")
-    private final String password;
+    private final String mPassword;
 
     public EstablishSessionRequest(@NonNull String login, @NonNull String password) {
-        this.login = login;
-        this.password = password;
+        this.mLogin = login;
+        this.mPassword = password;
     }
 }

@@ -12,17 +12,17 @@ import java.util.List;
 
 public class InsuranceListAdapter extends RecyclerView.Adapter<InsuranceListAdapter.ViewHolder> {
 
-    private List<Insurance> nodes = new ArrayList<>();
+    private List<Insurance> mNodes = new ArrayList<>();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title;
-        private TextView property;
+        private TextView mTitle;
+        private TextView mProperty;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            property = (TextView) itemView.findViewById(R.id.property);
+            mTitle = (TextView) itemView.findViewById(R.id.title);
+            mProperty = (TextView) itemView.findViewById(R.id.property);
         }
 
     }
@@ -36,7 +36,7 @@ public class InsuranceListAdapter extends RecyclerView.Adapter<InsuranceListAdap
     }
 
     public void setData(List<Insurance> nodes) {
-        this.nodes = nodes;
+        this.mNodes = nodes;
     }
 
     @Override
@@ -48,12 +48,12 @@ public class InsuranceListAdapter extends RecyclerView.Adapter<InsuranceListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(this.nodes.get(position).getTitle());
-        holder.property.setText(this.nodes.get(position).getInsuredObject());
+        holder.mTitle.setText(this.mNodes.get(position).getTitle());
+        holder.mProperty.setText(this.mNodes.get(position).getInsuredObject());
     }
 
     @Override
     public int getItemCount() {
-        return this.nodes.size();
+        return this.mNodes.size();
     }
 }

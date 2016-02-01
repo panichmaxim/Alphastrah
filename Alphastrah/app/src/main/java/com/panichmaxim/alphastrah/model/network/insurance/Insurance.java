@@ -9,164 +9,164 @@ import java.util.List;
 
 public class Insurance {
     @SerializedName("id")
-    private String id;
+    private String mId;
     @SerializedName("title")
-    private String title;
+    private String mTitle;
     @SerializedName("contract_number")
-    private String number;
+    private String mNumber;
     @SerializedName("start_date")
-    private Date startDate;
+    private Date mStartDate;
     @SerializedName("InsurancePremium")
-    private String insurancePremium;
+    private String mInsurancePremium;
     @SerializedName("end_date")
-    private Date endDate;
+    private Date mEndDate;
     @SerializedName("owner_participants")
-    private List<InsuranceParticipant> owners;
+    private List<InsuranceParticipant> mOwners;
     @SerializedName("insurer_participants")
-    private List<InsuranceParticipant> insurers;
+    private List<InsuranceParticipant> mInsurers;
     @SerializedName("insured_participants")
-    private List<InsuranceParticipant> insured;
+    private List<InsuranceParticipant> mInsured;
     @SerializedName("drivers")
-    private List<InsuranceParticipant> drivers;
+    private List<InsuranceParticipant> mDrivers;
     @SerializedName("product_id")
-    private String insuranceProduct;
+    private String mInsuranceProduct;
     @SerializedName("renew_available")
-    private Boolean canBeRenewed;
+    private Boolean mCanBeRenewed;
     @SerializedName("renew_url")
-    private String renewUrl;
+    private String mRenewUrl;
     @SerializedName("field_group_list")
-    private List<InsuranceFieldGroup> insuranceFieldGroups;
+    private List<InsuranceFieldGroup> mInsuranceFieldGroups;
     @SerializedName("insured_object")
-    private String insuredObject;
+    private String mInsuredObject;
     @SerializedName("emergency_phone")
-    private Phone phone;
+    private Phone mPhone;
     @SerializedName("sos_activities")
-    private List<SosActivities> sosActivities;
+    private List<SosActivities> mSosActivities;
     @SerializedName("clinic_id_list")
-    private List<String> clinicIdList;
+    private List<String> mClinicIdList;
     @SerializedName("access_clinic_phone")
-    private Boolean accessClinicPhone;
+    private Boolean mAccessClinicPhone;
     @SerializedName("type")
-    private InsuranceType type;
+    private InsuranceType mType;
     @SerializedName("archive_date")
-    private Date archiveDate;
+    private Date mArchiveDate;
     @SerializedName("file_link")
-    private String fileLink;
+    private String mFileLink;
     @SerializedName("help_file")
-    private String helpFileLink;
+    private String mHelpFileLink;
 
     @Nullable
     public String getHelpFileLink() {
-        return helpFileLink;
+        return mHelpFileLink;
     }
 
     @NonNull
     public String getId() {
-        return id;
+        return mId;
     }
 
     @NonNull
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     @NonNull
     public String getNumber() {
-        return number;
+        return mNumber;
     }
 
     @NonNull
     public Date getStartDate() {
-        return startDate;
+        return mStartDate;
     }
 
     @Nullable
     public String getInsurancePremium() {
-        return insurancePremium;
+        return mInsurancePremium;
     }
 
     @NonNull
     public Date getEndDate() {
-        return endDate;
+        return mEndDate;
     }
 
     @NonNull
     public List<InsuranceParticipant> getOwners() {
-        return owners;
+        return mOwners;
     }
 
     @Nullable
     public List<InsuranceParticipant> getInsurers() {
-        return insurers;
+        return mInsurers;
     }
 
     @Nullable
     public List<InsuranceParticipant> getInsured() {
-        return insured;
+        return mInsured;
     }
 
     @Nullable
     public List<InsuranceParticipant> getDrivers() {
-        return drivers;
+        return mDrivers;
     }
 
     @NonNull
     public String getInsuranceProduct() {
-        return insuranceProduct;
+        return mInsuranceProduct;
     }
 
     @Nullable
     public Boolean getCanBeRenewed() {
-        return canBeRenewed;
+        return mCanBeRenewed;
     }
 
     @Nullable
     public String getRenewUrl() {
-        return renewUrl;
+        return mRenewUrl;
     }
 
     @NonNull
     public List<InsuranceFieldGroup> getInsuranceFieldGroups() {
-        return insuranceFieldGroups;
+        return mInsuranceFieldGroups;
     }
 
     @NonNull
     public String getInsuredObject() {
-        return insuredObject;
+        return mInsuredObject;
     }
 
     @NonNull
     public Phone getPhone() {
-        return phone;
+        return mPhone;
     }
 
     @NonNull
     public List<SosActivities> getSosActivities() {
-        return sosActivities;
+        return mSosActivities;
     }
 
     @Nullable
     public List<String> getClinicIdList() {
-        return clinicIdList;
+        return mClinicIdList;
     }
 
     @Nullable
     public Boolean getAccessClinicPhone() {
-        return accessClinicPhone;
+        return mAccessClinicPhone;
     }
 
     @NonNull
     public InsuranceType getType() {
-        return type;
+        return mType;
     }
 
     @NonNull
     public Date getArchiveDate() {
-        return archiveDate;
+        return mArchiveDate;
     }
 
     @Nullable
     public String getFileLink() {
-        return fileLink;
+        return mFileLink;
     }
 }

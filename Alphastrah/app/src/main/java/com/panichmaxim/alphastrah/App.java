@@ -4,13 +4,13 @@ import android.app.Application;
 
 public class App extends Application {
 
-    private static App instance;
+    private static App sInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        sInstance = this;
     }
 
-    public static App getContext() { return instance; }
+    public static App getContext() { return sInstance; }
 }

@@ -23,10 +23,10 @@ import com.panichmaxim.alphastrah.ui.view.LoginView;
 
 public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 
-    @Bind(R.id.email) AutoCompleteTextView emailView;
-    @Bind(R.id.password) EditText passwordView;
-    @Bind(R.id.login_progress) View progressView;
-    @Bind(R.id.login_form) View loginFormView;
+    @Bind(R.id.email) AutoCompleteTextView mEmailView;
+    @Bind(R.id.password) EditText mPasswordView;
+    @Bind(R.id.login_progress) View mProgressView;
+    @Bind(R.id.login_form) View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,34 +43,34 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @OnClick(R.id.email_sign_in_button)
     public void signInButtonClicked(){
         // Reset errors.
-        emailView.setError(null);
-        passwordView.setError(null);
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
         // Store values at the time of the login attempt.
-        String email = emailView.getText().toString();
-        String password = passwordView.getText().toString();
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
-            passwordView.setError(getString(R.string.error_field_required));
-            focusView = passwordView;
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
             cancel = true;
         } else if (!isPasswordValid(password)) {
-            passwordView.setError(getString(R.string.error_invalid_password));
-            focusView = passwordView;
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            emailView.setError(getString(R.string.error_field_required));
-            focusView = emailView;
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            emailView.setError(getString(R.string.error_invalid_email));
-            focusView = emailView;
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
             cancel = true;
         }
 
@@ -91,8 +91,8 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             startActivity(intent);
         } else {
             // TODO
-            passwordView.setError(getString(R.string.login_error));
-            passwordView.requestFocus();
+            mPasswordView.setError(getString(R.string.login_error));
+            mPasswordView.requestFocus();
         }
     }
 
@@ -109,26 +109,26 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            loginFormView.animate().setDuration(shortAnimTime).alpha(
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
         } else {
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 

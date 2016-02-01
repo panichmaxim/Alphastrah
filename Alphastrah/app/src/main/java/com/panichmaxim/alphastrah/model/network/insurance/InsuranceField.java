@@ -7,31 +7,31 @@ import com.panichmaxim.alphastrah.model.network.location.Coordinate;
 
 public class InsuranceField {
     @SerializedName("coordinate")
-    private Coordinate coordinate;
+    private Coordinate mCoordinate;
     @SerializedName("text")
-    private String text;
+    private String mText;
     @SerializedName("title")
-    private String title;
+    private String mTitle;
     @SerializedName("type")
-    private InsuranceFieldType type;
+    private InsuranceFieldType mType;
 
     @NonNull
     public InsuranceFieldType getType() {
-        return this.type;
+        return this.mType;
     }
 
     @NonNull
     public String getTitle() {
-        return this.title;
+        return this.mTitle;
     }
 
     @NonNull
     public String getText() {
-        return this.text;
+        return this.mText;
     }
 
     @Nullable
     public Coordinate getCoordinate() {
-        return this.coordinate;
+        return this.mCoordinate;
     }
 }

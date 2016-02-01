@@ -8,24 +8,24 @@ import com.panichmaxim.alphastrah.ui.view.LoginView;
 
 public class LoginPresenter extends MvpBasePresenter<LoginView> {
 
-    private UserLoginTask loginTask;
+    private UserLoginTask mLoginTask;
 
     private void cancelLoginTaskIfRunning(){
-        if (loginTask != null){
-            loginTask.cancel(true);
+        if (mLoginTask != null){
+            mLoginTask.cancel(true);
         }
     }
 
     public void attemptLogin(String email, String password){
         cancelLoginTaskIfRunning();
 
-        loginTask = new UserLoginTask(email, password, new UserLoginTask.LoginTaskListener(){
+        mLoginTask = new UserLoginTask(email, password, new UserLoginTask.LoginTaskListener(){
             public void loginCompleted(ServerResponse<AuthorizeResponse> response){
                 if (isViewAttached())
                     getView().loginCompleted(response);
             }
         });
-        loginTask.execute();
+        mLoginTask.execute();
     }
 
     public void detachView(boolean retainPresenterInstance){

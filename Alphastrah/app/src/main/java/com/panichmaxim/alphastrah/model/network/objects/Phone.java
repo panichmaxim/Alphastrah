@@ -7,31 +7,31 @@ import com.google.gson.annotations.SerializedName;
 
 public final class Phone {
     @SerializedName("human_readable")
-    private String forHuman;
+    private String mForHuman;
     @SerializedName("plain")
-    private String forSystem;
+    private String mForSystem;
     @SerializedName("ip_id")
-    private String ipId;
+    private String mIpId;
 
     Phone(@NonNull String forHuman, @NonNull String forSystem, @Nullable String ipId) {
-        this.forHuman = forHuman;
-        this.forSystem = forSystem;
-        this.ipId = ipId;
+        this.mForHuman = forHuman;
+        this.mForSystem = forSystem;
+        this.mIpId = ipId;
     }
 
     @NonNull
     public String getForHuman() {
-        return this.forHuman;
+        return this.mForHuman;
     }
 
     @NonNull
     public String getForSystem() {
-        return this.forSystem;
+        return this.mForSystem;
     }
 
     @Nullable
     public String getIpId() {
-        return this.ipId;
+        return this.mIpId;
     }
 
 }

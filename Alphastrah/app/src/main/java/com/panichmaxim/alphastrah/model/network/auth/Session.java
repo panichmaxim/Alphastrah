@@ -5,18 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class Session {
     @SerializedName("id")
-    private int id;
+    private int mId;
     @SerializedName("access_token")
-    private String token;
+    private String mToken;
 
     @NonNull
     public int getId() {
-        return this.id;
+        return this.mId;
     }
 
     @NonNull
     public String getToken() {
-        return this.token;
+        return this.mToken;
     }
 
 }

@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 public final class ServerError {
     @SerializedName("code")
-    private int code;
+    private int mCode;
     @SerializedName("error_message")
-    private String message;
+    private String mMessage;
 
     public int getCode() {
-        return this.code;
+        return this.mCode;
     }
 
     @Nullable
     public String getMessage() {
-        return this.message;
+        return this.mMessage;
     }
 }

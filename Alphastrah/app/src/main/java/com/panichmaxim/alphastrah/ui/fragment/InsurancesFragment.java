@@ -9,19 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 import com.panichmaxim.alphastrah.R;
-import com.panichmaxim.alphastrah.controller.adapter.InsuranceListAdapter;
-import com.panichmaxim.alphastrah.model.network.insurance.Insurance;
+import com.panichmaxim.alphastrah.controller.adapter.InsurancesListAdapter;
+import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
 import com.panichmaxim.alphastrah.presenter.InsurancesPresenter;
 import com.panichmaxim.alphastrah.ui.view.InsurancesView;
-import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<Insurance>, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
+public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, InsurancesInfo, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
-    private InsuranceListAdapter mAdapter;
+    private InsurancesListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
         super.onViewCreated(view, savedInstance);
         ButterKnife.bind(this, view);
         contentView.setOnRefreshListener(this);
-        mAdapter = new InsuranceListAdapter();
+        mAdapter = new InsurancesListAdapter(mRecyclerView, getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
         loadData(false);
@@ -41,7 +41,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
 
     @Override
     public void loadData(boolean pullToRefresh) {
-        presenter.loadCountries(pullToRefresh);
+        presenter.loadData(pullToRefresh);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
     }
 
     @Override
-    public void setData(List<Insurance> data) {
-        mAdapter.setData(data);
+    public void setData(InsurancesInfo insurancesInfo) {
+        mAdapter.setData(insurancesInfo);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -82,6 +82,5 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, List<
         super.showLoading(pullToRefresh);
         contentView.setRefreshing(pullToRefresh);
     }
-
 
 }

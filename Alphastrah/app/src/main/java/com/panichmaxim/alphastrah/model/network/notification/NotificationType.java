@@ -1,6 +1,8 @@
 package com.panichmaxim.alphastrah.model.network.notification;
 
-public enum NotificationType {
+import java.io.Serializable;
+
+public enum NotificationType implements Serializable {
     MESSAGE,
     FIELD_LIST,
     APPOINTMENT,

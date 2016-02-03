@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.panichmaxim.alphastrah.model.network.location.Sto;
 import com.panichmaxim.alphastrah.model.network.objects.Phone;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Notification {
+public class Notification implements Serializable {
     @SerializedName("important")
     private Boolean isImportant;
     @SerializedName("appointment_id")

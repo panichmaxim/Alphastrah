@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <com.panichmaxim.alphastrah.ui.utils.FontAutoCompleteTextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,13 +42,13 @@
                     android:maxLines="1"
                     android:singleLine="true" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.panichmaxim.alphastrah.ui.utils.FontEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                     android:maxLines="1"
                     android:singleLine="true" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout>
 
             <Button
                 android:id="@+id/email_sign_in_button"

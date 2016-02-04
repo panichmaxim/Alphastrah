@@ -5,21 +5,21 @@ import com.google.gson.annotations.SerializedName;
 
 public final class ServerResponse<DataType> {
     @SerializedName("data")
-    private DataType data;
+    private DataType mData;
     @SerializedName("error")
-    private ServerError error;
+    private ServerError mError;
 
     @Nullable
     public DataType getData() {
-        return this.data;
+        return this.mData;
     }
 
     @Nullable
     public ServerError getError() {
-        return this.error;
+        return this.mError;
     }
 
     public final boolean isSuccessful() {
-        return this.error == null;
+        return this.mError == null;
     }
 }

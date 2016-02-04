@@ -8,18 +8,18 @@ import java.util.List;
 
 public class InsuranceFieldGroup {
     @SerializedName("fields")
-    private List<InsuranceField> fields;
+    private List<InsuranceField> mFields;
     @SerializedName("title")
-    private String title;
+    private String mTitle;
 
     @NonNull
     public String getTitle() {
-        return this.title;
+        return this.mTitle;
     }
 
     @NonNull
     public List<InsuranceField> getFields() {
-        return this.fields;
+        return this.mFields;
     }
 
 }

@@ -10,67 +10,67 @@ import java.util.Date;
 
 public class InsuranceParticipant {
     @SerializedName("address")
-    private Address address;
+    private Address mAddress;
     @SerializedName("birth_date")
-    private Date birthday;
+    private Date mBirthday;
     @SerializedName("contact_information")
-    private String contactInfo;
+    private String mContactInfo;
     @SerializedName("email")
-    private String email;
+    private String mEmail;
     @SerializedName("first_name")
-    private String firstName;
+    private String mFirstName;
     @SerializedName("id")
-    private String id;
+    private String mId;
     @SerializedName("last_name")
-    private String lastName;
+    private String mLastName;
     @SerializedName("patronymic")
-    private String patronymic;
+    private String mPatronymic;
     @SerializedName("sex")
-    private String sex;
+    private String mSex;
 
 
     @NonNull
     public String getId() {
-        return this.id;
+        return this.mId;
     }
 
     @NonNull
     public String getFirstName() {
-        return this.firstName;
+        return this.mFirstName;
     }
 
     @NonNull
     public String getLastName() {
-        return this.lastName;
+        return this.mLastName;
     }
 
     @Nullable
     public String getMiddleName() {
-        return this.patronymic;
+        return this.mPatronymic;
     }
 
     @NonNull
     public Date getBirthday() {
-        return this.birthday;
+        return this.mBirthday;
     }
 
     @Nullable
     public String getSex() {
-        return this.sex;
+        return this.mSex;
     }
 
     @Nullable
     public String getContactInfo() {
-        return this.contactInfo;
+        return this.mContactInfo;
     }
 
     @Nullable
     public Address getAddress() {
-        return this.address;
+        return this.mAddress;
     }
 
     @Nullable
     public String getEmail() {
-        return this.email;
+        return this.mEmail;
     }
 }

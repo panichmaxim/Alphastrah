@@ -8,17 +8,17 @@ import com.panichmaxim.alphastrah.model.network.auth.Session;
 
 public class AuthorizeResponse {
     @SerializedName("account")
-    private Account account;
+    private Account mAccount;
     @SerializedName("session")
-    private Session session;
+    private Session mSession;
 
     @NonNull
     public Session getSession() {
-        return this.session;
+        return this.mSession;
     }
 
     @NonNull
     public Account getAccount() {
-        return this.account;
+        return this.mAccount;
     }
 }

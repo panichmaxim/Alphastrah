@@ -6,17 +6,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class Coordinate {
     @SerializedName("latitude")
-    private Double lat;
+    private Double mLat;
     @SerializedName("longitude")
-    private Double lon;
+    private Double mLon;
 
     @NonNull
     public Double getLon() {
-        return this.lon;
+        return this.mLon;
     }
 
     @NonNull
     public Double getLat() {
-        return this.lat;
+        return this.mLat;
     }
 }

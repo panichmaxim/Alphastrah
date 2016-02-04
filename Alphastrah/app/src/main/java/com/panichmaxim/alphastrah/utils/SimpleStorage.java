@@ -11,9 +11,9 @@ import com.panichmaxim.alphastrah.model.network.auth.Session;
 public final class SimpleStorage {
 
     private static final int CURRENT_VERSION = 1;
-    private static volatile SimpleStorage instance;
-    private final SharedPreferences preferences;
-    private final Gson gson;
+    private static volatile SimpleStorage sInstance;
+    private final SharedPreferences mPreferences;
+    private final Gson mGson;
 
     private final String TOKEN = "TOKEN";
     private final String SESSION = "SESSION";
@@ -21,17 +21,17 @@ public final class SimpleStorage {
     private final String PASSWORD = "PASSWORD";
 
     private SimpleStorage() {
-        this.gson = GsonFactory.create();
-        this.preferences = App.getContext().getSharedPreferences("preferences", 0);
+        this.mGson = GsonFactory.create();
+        this.mPreferences = App.getContext().getSharedPreferences("preferences", 0);
     }
 
     public static SimpleStorage getInstance() {
-        SimpleStorage localInstance = instance;
+        SimpleStorage localInstance = sInstance;
         if (localInstance == null) {
             synchronized (SimpleStorage.class) {
-                localInstance = instance;
+                localInstance = sInstance;
                 if (localInstance == null) {
-                    instance = localInstance = new SimpleStorage();
+                    sInstance = localInstance = new SimpleStorage();
                 }
             }
         }
@@ -44,9 +44,9 @@ public final class SimpleStorage {
     }
 
     public final void saveAuthInfo(Session session, Account account) {
-        String sessionJson = this.gson.toJson(session);
-        String accountJson = this.gson.toJson(account);
-        SharedPreferences.Editor ed = preferences.edit();
+        String sessionJson = this.mGson.toJson(session);
+        String accountJson = this.mGson.toJson(account);
+        SharedPreferences.Editor ed = mPreferences.edit();
         if (session != null) {
             ed.putString(TOKEN, session.getToken());
         } else {
@@ -58,15 +58,15 @@ public final class SimpleStorage {
     }
 
     public String getToken() {
-        return this.preferences.getString(TOKEN, null);
+        return this.mPreferences.getString(TOKEN, null);
     }
 
     public Session getSession() {
-        return this.gson.fromJson(this.preferences.getString(SESSION, null), Session.class);
+        return this.mGson.fromJson(this.mPreferences.getString(SESSION, null), Session.class);
     }
 
     public Account getAccount() {
-        return this.gson.fromJson(this.preferences.getString(ACCOUNT, null), Account.class);
+        return this.mGson.fromJson(this.mPreferences.getString(ACCOUNT, null), Account.class);
     }
 
     public boolean isAuthorized() {
@@ -74,13 +74,13 @@ public final class SimpleStorage {
     }
 
     public final void setPassword(String password) {
-        SharedPreferences.Editor ed = preferences.edit();
+        SharedPreferences.Editor ed = mPreferences.edit();
         ed.putString(PASSWORD, password);
         ed.commit();
     }
 
     public final String getPassword() {
-        return this.preferences.getString(PASSWORD, null);
+        return this.mPreferences.getString(PASSWORD, null);
     }
 
 }

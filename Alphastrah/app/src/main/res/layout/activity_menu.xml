@@ -47,7 +47,7 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/logo" />
 
-            <TextView
+            <com.panichmaxim.alphastrah.ui.utils.FontTextView
                 android:id="@+id/profile_fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
 
-            <TextView
+            <com.panichmaxim.alphastrah.ui.utils.FontTextView
                 android:id="@+id/policies_fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

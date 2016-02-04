@@ -9,64 +9,64 @@ import java.util.Date;
 
 public class Account {
     @SerializedName("id")
-    private int id;
+    private int mId;
     @SerializedName("first_name")
-    private String firstName;
+    private String mFirstName;
     @SerializedName("last_name")
-    private String lastName;
+    private String mLastName;
     @SerializedName("patronymic")
-    private String patronymic;
+    private String mPatronymic;
     @SerializedName("phone")
-    private Phone phone;
+    private Phone mPhone;
     @SerializedName("birth_date")
-    private Date birthday;
+    private Date mBirthday;
     @SerializedName("email")
-    private String email;
+    private String mEmail;
 
 
     public Account(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String patronymic, @NonNull Phone phone, @NonNull Date birthday, @NonNull String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.patronymic = patronymic;
-        this.phone = phone;
-        this.birthday = birthday;
-        this.email = email;
+        this.mId = id;
+        this.mFirstName = firstName;
+        this.mLastName = lastName;
+        this.mPatronymic = patronymic;
+        this.mPhone = phone;
+        this.mBirthday = birthday;
+        this.mEmail = email;
     }
 
     @NonNull
     public int getId() {
-        return this.id;
+        return this.mId;
     }
 
     @NonNull
     public String getFirstName() {
-        return this.firstName;
+        return this.mFirstName;
     }
 
     @NonNull
     public String getLastName() {
-        return this.lastName;
+        return this.mLastName;
     }
 
     @Nullable
     public String getPatronymic() {
-        return this.patronymic;
+        return this.mPatronymic;
     }
 
     @NonNull
     public Phone getPhone() {
-        return this.phone;
+        return this.mPhone;
     }
 
     @NonNull
     public Object getBirthday() {
-        return this.birthday;
+        return this.mBirthday;
     }
 
     @NonNull
     public String getEmail() {
-        return this.email;
+        return this.mEmail;
     }
 
 }

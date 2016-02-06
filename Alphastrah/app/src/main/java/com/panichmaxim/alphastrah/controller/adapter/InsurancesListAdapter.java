@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class InsurancesListAdapter extends RecyclerView.Adapter<InsurancesListAdapter.ViewHolder> {
 
-    private InsurancesInfo mNodes = new InsurancesInfo();
+    public InsurancesInfo mNodes = new InsurancesInfo();
     private RecyclerView mRecyclerView;
     private Context context;
 
@@ -44,7 +44,7 @@ public class InsurancesListAdapter extends RecyclerView.Adapter<InsurancesListAd
             Intent intent = new Intent(context, NotificationsActity.class);
             ArrayList<Notification> notifications = new ArrayList<>();
             for (Notification node : mNodes.getmNotificationData()) {
-                if (mNodes.getmInsurancesData().get(mRecyclerView.indexOfChild(v)).getId().equals(node.getInsuranceId()))  notifications.add(node);
+                if (mNodes.getmInsurancesData().get(((SimpleSectionedRecyclerViewAdapter) mRecyclerView.getAdapter()).sectionedPositionToPosition(mRecyclerView.indexOfChild(v))).getId().equals(node.getInsuranceId()))  notifications.add(node);
             }
             intent.putExtra("nodes", notifications);
             context.startActivity(intent);

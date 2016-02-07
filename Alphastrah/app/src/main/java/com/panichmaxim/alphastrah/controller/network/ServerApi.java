@@ -14,7 +14,7 @@ import com.panichmaxim.alphastrah.controller.network.response.notification.Notif
 
 public interface ServerApi {
     @POST("/sessions/establish")
-    ServerResponse<AuthorizeResponse> authorize(@Body @NonNull EstablishSessionRequest establishSessionRequest);
+    void authorize(@Body @NonNull EstablishSessionRequest establishSessionRequest, Callback<ServerResponse<AuthorizeResponse>> callback);
 
     @GET("/insurances")
     void getInsurances(Callback<ServerResponse<InsurancesResponse>> callback);

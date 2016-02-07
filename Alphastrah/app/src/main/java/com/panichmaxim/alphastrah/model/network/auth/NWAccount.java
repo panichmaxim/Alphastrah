@@ -3,11 +3,11 @@ package com.panichmaxim.alphastrah.model.network.auth;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
-import com.panichmaxim.alphastrah.model.network.objects.Phone;
+import com.panichmaxim.alphastrah.model.network.objects.NWPhone;
 
 import java.util.Date;
 
-public class Account {
+public class NWAccount {
     @SerializedName("id")
     private int mId;
     @SerializedName("first_name")
@@ -17,14 +17,14 @@ public class Account {
     @SerializedName("patronymic")
     private String mPatronymic;
     @SerializedName("phone")
-    private Phone mPhone;
+    private NWPhone mPhone;
     @SerializedName("birth_date")
     private Date mBirthday;
     @SerializedName("email")
     private String mEmail;
 
 
-    public Account(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String patronymic, @NonNull Phone phone, @NonNull Date birthday, @NonNull String email) {
+    public NWAccount(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull String patronymic, @NonNull NWPhone phone, @NonNull Date birthday, @NonNull String email) {
         this.mId = id;
         this.mFirstName = firstName;
         this.mLastName = lastName;
@@ -55,7 +55,7 @@ public class Account {
     }
 
     @NonNull
-    public Phone getPhone() {
+    public NWPhone getPhone() {
         return this.mPhone;
     }
 

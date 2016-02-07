@@ -1,37 +1,43 @@
 package com.panichmaxim.alphastrah.presenter;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
+import com.panichmaxim.alphastrah.controller.network.GsonFactory;
+import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
+import com.panichmaxim.alphastrah.controller.network.ServerApi;
+import com.panichmaxim.alphastrah.controller.network.request.EstablishSessionRequest;
 import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
-import com.panichmaxim.alphastrah.controller.tasks.UserLoginTask;
 import com.panichmaxim.alphastrah.ui.view.LoginView;
+import com.panichmaxim.alphastrah.utils.SimpleStorage;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 public class LoginPresenter extends MvpBasePresenter<LoginView> {
 
-    private UserLoginTask mLoginTask;
+    public void attemptLogin(String email, final String password){
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+        ServerApi serverApi = restAdapter.create(ServerApi.class);
+        serverApi.authorize(new EstablishSessionRequest(email, password), new Callback<ServerResponse<AuthorizeResponse>>() {
 
-    private void cancelLoginTaskIfRunning(){
-        if (mLoginTask != null){
-            mLoginTask.cancel(true);
-        }
-    }
-
-    public void attemptLogin(String email, String password){
-        cancelLoginTaskIfRunning();
-
-        mLoginTask = new UserLoginTask(email, password, new UserLoginTask.LoginTaskListener(){
-            public void loginCompleted(ServerResponse<AuthorizeResponse> response){
-                if (isViewAttached())
-                    getView().loginCompleted(response);
+            @Override
+            public void success(ServerResponse<AuthorizeResponse> auth, Response response) {
+                SimpleStorage storage = SimpleStorage.getInstance();
+                storage.saveAuthInfo(auth.getData().getSession(), auth.getData().getAccount());
+                storage.setPassword(password);
+                if (isViewAttached()) {
+                    getView().loginCompleted(auth);
+                }
             }
-        });
-        mLoginTask.execute();
-    }
 
-    public void detachView(boolean retainPresenterInstance){
-        super.detachView(retainPresenterInstance);
-        if (!retainPresenterInstance){
-            cancelLoginTaskIfRunning();
-        }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+
+            }
+
+        });
     }
 }

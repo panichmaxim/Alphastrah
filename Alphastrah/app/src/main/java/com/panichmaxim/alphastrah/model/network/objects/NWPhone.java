@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class Phone {
+public final class NWPhone {
     @SerializedName("human_readable")
     private String mForHuman;
     @SerializedName("plain")
@@ -13,7 +13,7 @@ public final class Phone {
     @SerializedName("ip_id")
     private String mIpId;
 
-    Phone(@NonNull String forHuman, @NonNull String forSystem, @Nullable String ipId) {
+    NWPhone(@NonNull String forHuman, @NonNull String forSystem, @Nullable String ipId) {
         this.mForHuman = forHuman;
         this.mForSystem = forSystem;
         this.mIpId = ipId;

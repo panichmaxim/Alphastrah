@@ -3,11 +3,11 @@ package com.panichmaxim.alphastrah.model.network.insurance;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
-import com.panichmaxim.alphastrah.model.network.objects.Phone;
+import com.panichmaxim.alphastrah.model.network.objects.NWPhone;
 import java.util.Date;
 import java.util.List;
 
-public class Insurance {
+public class NWInsurance {
     @SerializedName("id")
     private String mId;
     @SerializedName("title")
@@ -21,13 +21,13 @@ public class Insurance {
     @SerializedName("end_date")
     private Date mEndDate;
     @SerializedName("owner_participants")
-    private List<InsuranceParticipant> mOwners;
+    private List<NWInsuranceParticipant> mOwners;
     @SerializedName("insurer_participants")
-    private List<InsuranceParticipant> mInsurers;
+    private List<NWInsuranceParticipant> mInsurers;
     @SerializedName("insured_participants")
-    private List<InsuranceParticipant> mInsured;
+    private List<NWInsuranceParticipant> mInsured;
     @SerializedName("drivers")
-    private List<InsuranceParticipant> mDrivers;
+    private List<NWInsuranceParticipant> mDrivers;
     @SerializedName("product_id")
     private String mInsuranceProduct;
     @SerializedName("renew_available")
@@ -35,11 +35,11 @@ public class Insurance {
     @SerializedName("renew_url")
     private String mRenewUrl;
     @SerializedName("field_group_list")
-    private List<InsuranceFieldGroup> mInsuranceFieldGroups;
+    private List<NWInsuranceFieldGroup> mInsuranceFieldGroups;
     @SerializedName("insured_object")
     private String mInsuredObject;
     @SerializedName("emergency_phone")
-    private Phone mPhone;
+    private NWPhone mPhone;
     @SerializedName("sos_activities")
     private List<SosActivities> mSosActivities;
     @SerializedName("clinic_id_list")
@@ -91,22 +91,22 @@ public class Insurance {
     }
 
     @NonNull
-    public List<InsuranceParticipant> getOwners() {
+    public List<NWInsuranceParticipant> getOwners() {
         return mOwners;
     }
 
     @Nullable
-    public List<InsuranceParticipant> getInsurers() {
+    public List<NWInsuranceParticipant> getInsurers() {
         return mInsurers;
     }
 
     @Nullable
-    public List<InsuranceParticipant> getInsured() {
+    public List<NWInsuranceParticipant> getInsured() {
         return mInsured;
     }
 
     @Nullable
-    public List<InsuranceParticipant> getDrivers() {
+    public List<NWInsuranceParticipant> getDrivers() {
         return mDrivers;
     }
 
@@ -126,7 +126,7 @@ public class Insurance {
     }
 
     @NonNull
-    public List<InsuranceFieldGroup> getInsuranceFieldGroups() {
+    public List<NWInsuranceFieldGroup> getInsuranceFieldGroups() {
         return mInsuranceFieldGroups;
     }
 
@@ -136,7 +136,7 @@ public class Insurance {
     }
 
     @NonNull
-    public Phone getPhone() {
+    public NWPhone getPhone() {
         return mPhone;
     }
 

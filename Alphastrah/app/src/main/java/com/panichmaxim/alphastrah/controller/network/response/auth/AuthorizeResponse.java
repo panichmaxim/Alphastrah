@@ -3,22 +3,22 @@ package com.panichmaxim.alphastrah.controller.network.response.auth;
 import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
-import com.panichmaxim.alphastrah.model.network.auth.Account;
-import com.panichmaxim.alphastrah.model.network.auth.Session;
+import com.panichmaxim.alphastrah.model.network.auth.NWAccount;
+import com.panichmaxim.alphastrah.model.network.auth.NWSession;
 
 public class AuthorizeResponse {
     @SerializedName("account")
-    private Account mAccount;
+    private NWAccount mAccount;
     @SerializedName("session")
-    private Session mSession;
+    private NWSession mSession;
 
     @NonNull
-    public Session getSession() {
+    public NWSession getSession() {
         return this.mSession;
     }
 
     @NonNull
-    public Account getAccount() {
+    public NWAccount getAccount() {
         return this.mAccount;
     }
 }

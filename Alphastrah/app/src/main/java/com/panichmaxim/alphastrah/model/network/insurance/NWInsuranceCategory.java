@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class InsuranceCategory {
+public class NWInsuranceCategory {
     @SerializedName("days_left")
     private Integer mDaysToNotify;
     @SerializedName("id")

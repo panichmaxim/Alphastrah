@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class InsuranceFieldGroup {
+public class NWInsuranceFieldGroup {
     @SerializedName("fields")
-    private List<InsuranceField> mFields;
+    private List<NWInsuranceField> mFields;
     @SerializedName("title")
     private String mTitle;
 
@@ -18,7 +18,7 @@ public class InsuranceFieldGroup {
     }
 
     @NonNull
-    public List<InsuranceField> getFields() {
+    public List<NWInsuranceField> getFields() {
         return this.mFields;
     }
 

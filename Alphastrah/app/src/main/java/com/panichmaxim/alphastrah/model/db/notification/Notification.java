@@ -2,7 +2,8 @@ package com.panichmaxim.alphastrah.model.db.notification;
 
 import com.panichmaxim.alphastrah.model.db.location.Sto;
 import com.panichmaxim.alphastrah.model.db.objects.Phone;
-import com.panichmaxim.alphastrah.model.db.objects.StringObject;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Notification extends RealmObject {
+public class Notification extends RealmObject implements Serializable {
     @PrimaryKey
     private String mId;
     private Boolean isImportant;

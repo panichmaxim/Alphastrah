@@ -1,8 +1,10 @@
 package com.panichmaxim.alphastrah.model.db.notification;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 
-public class NotificationField extends RealmObject {
+public class NotificationField extends RealmObject implements Serializable {
     private String mTitle;
     private String mValue;
 

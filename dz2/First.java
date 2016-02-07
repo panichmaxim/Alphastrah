@@ -1,5 +1,3 @@
-package com.redmadrobot.dz2;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -8,7 +6,12 @@ import java.util.concurrent.Executors;
 public class First {
 
     private static List<Integer> sBalls = new ArrayList<>();
-    private static volatile boolean sRun = true; // иначе другие потоки не увидят что переменная изменилась
+    private static boolean sRun = true;
+    /*
+        TODO READ COMMENT
+        Не даем потокам одновременно доступ к редактированию/просмотру sBalls
+     */
+    private static final Object mLock = new Object();
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService e = Executors.newFixedThreadPool(3);
@@ -25,9 +28,10 @@ public class First {
         @Override
         public void run() {
             while(sRun) {
-                sBalls.add((int) (10000 * Math.random()));
+                synchronized (mLock) {
+                    sBalls.add((int) (10000 * Math.random()));
+                }
             }
-
             System.out.println("UpTask: end");
         }
     }
@@ -38,14 +42,15 @@ public class First {
         @Override
         public void run() {
             while (sRun) {
+                synchronized (mLock) {
                 System.out.println("Size : " + sBalls.size());
-                for (Integer i : sBalls) {
-                    if (i % 500 == 0) {
-                        System.out.println(i);
+                    for (Integer i : sBalls) {
+                        if (i % 500 == 0) {
+                            System.out.println(i);
+                        }
                     }
                 }
             }
-
             System.out.println("ReadTask: end");
         }
     }

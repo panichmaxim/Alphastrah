@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Coordinate {
+public class NWCoordinate {
     @SerializedName("latitude")
     private Double mLat;
     @SerializedName("longitude")

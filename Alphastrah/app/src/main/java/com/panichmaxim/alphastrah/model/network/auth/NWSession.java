@@ -3,7 +3,7 @@ package com.panichmaxim.alphastrah.model.network.auth;
 import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
-public class Session {
+public class NWSession {
     @SerializedName("id")
     private int mId;
     @SerializedName("access_token")

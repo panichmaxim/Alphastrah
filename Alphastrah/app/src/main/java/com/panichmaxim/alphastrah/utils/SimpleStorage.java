@@ -5,8 +5,8 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.panichmaxim.alphastrah.App;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
-import com.panichmaxim.alphastrah.model.network.auth.Account;
-import com.panichmaxim.alphastrah.model.network.auth.Session;
+import com.panichmaxim.alphastrah.model.network.auth.NWAccount;
+import com.panichmaxim.alphastrah.model.network.auth.NWSession;
 
 public final class SimpleStorage {
 
@@ -43,7 +43,7 @@ public final class SimpleStorage {
         saveAuthInfo(null, null);
     }
 
-    public final void saveAuthInfo(Session session, Account account) {
+    public final void saveAuthInfo(NWSession session, NWAccount account) {
         String sessionJson = this.mGson.toJson(session);
         String accountJson = this.mGson.toJson(account);
         SharedPreferences.Editor ed = mPreferences.edit();
@@ -61,12 +61,12 @@ public final class SimpleStorage {
         return this.mPreferences.getString(TOKEN, null);
     }
 
-    public Session getSession() {
-        return this.mGson.fromJson(this.mPreferences.getString(SESSION, null), Session.class);
+    public NWSession getSession() {
+        return this.mGson.fromJson(this.mPreferences.getString(SESSION, null), NWSession.class);
     }
 
-    public Account getAccount() {
-        return this.mGson.fromJson(this.mPreferences.getString(ACCOUNT, null), Account.class);
+    public NWAccount getAccount() {
+        return this.mGson.fromJson(this.mPreferences.getString(ACCOUNT, null), NWAccount.class);
     }
 
     public boolean isAuthorized() {

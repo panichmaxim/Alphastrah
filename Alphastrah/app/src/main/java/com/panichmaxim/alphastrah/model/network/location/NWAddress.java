@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Address {
+public class NWAddress {
     @SerializedName("city")
     private String mCity;
     @SerializedName("country")

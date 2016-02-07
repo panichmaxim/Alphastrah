@@ -3,14 +3,13 @@ package com.panichmaxim.alphastrah.model.network.notification;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
-import com.panichmaxim.alphastrah.model.network.location.Sto;
-import com.panichmaxim.alphastrah.model.network.objects.Phone;
-
-import java.io.Serializable;
+import com.panichmaxim.alphastrah.model.network.location.NWSto;
+import com.panichmaxim.alphastrah.model.network.objects.NWPhone;
+import com.panichmaxim.alphastrah.model.utils.ModelObject;
 import java.util.Date;
 import java.util.List;
 
-public class Notification implements Serializable {
+public class NWNotification extends ModelObject {
     @SerializedName("important")
     private Boolean isImportant;
     @SerializedName("appointment_id")
@@ -20,17 +19,17 @@ public class Notification implements Serializable {
     @SerializedName("event_number")
     private String mEventNumber;
     @SerializedName("field_list")
-    private List<NotificationField> mFields;
+    private List<NWNotificationField> mFields;
     @SerializedName("id")
     private String mId;
     @SerializedName("insurance_id")
     private String mInsuranceId;
     @SerializedName("phone")
-    private Phone mPhone;
+    private NWPhone mPhone;
     @SerializedName("annotation")
     private String mShortDescription;
     @SerializedName("stoa")
-    private Sto mSto;
+    private NWSto mSto;
     @SerializedName("full_text")
     private String mText;
     @SerializedName("title")
@@ -76,7 +75,7 @@ public class Notification implements Serializable {
     }
 
     @Nullable
-    public Sto getSto() {
+    public NWSto getSto() {
         return this.mSto;
     }
 
@@ -86,12 +85,12 @@ public class Notification implements Serializable {
     }
 
     @Nullable
-    public List<NotificationField> getFields() {
+    public List<NWNotificationField> getFields() {
         return this.mFields;
     }
 
     @Nullable
-    public Phone getPhone() {
+    public NWPhone getPhone() {
         return this.mPhone;
     }
 

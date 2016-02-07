@@ -4,21 +4,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
-import com.panichmaxim.alphastrah.model.network.objects.Phone;
+import com.panichmaxim.alphastrah.model.network.objects.NWPhone;
 
 import java.util.List;
 
-public class Sto {
+public class NWSto {
     @SerializedName("address")
     private String mAddress;
     @SerializedName("coordinate")
-    private Coordinate mCoordinate;
+    private NWCoordinate mCoordinate;
     @SerializedName("dealer")
     private String mDealer;
     @SerializedName("id")
     private String mId;
     @SerializedName("phone_list")
-    private List<Phone> mPhones;
+    private List<NWPhone> mPhones;
     @SerializedName("service_hours")
     private String mServiceHours;
     @SerializedName("title")
@@ -40,7 +40,7 @@ public class Sto {
     }
 
     @NonNull
-    public Coordinate getCoordinate() {
+    public NWCoordinate getCoordinate() {
         return this.mCoordinate;
     }
 
@@ -55,7 +55,7 @@ public class Sto {
     }
 
     @NonNull
-    public List<Phone> getPhones() {
+    public List<NWPhone> getPhones() {
         return this.mPhones;
     }
 

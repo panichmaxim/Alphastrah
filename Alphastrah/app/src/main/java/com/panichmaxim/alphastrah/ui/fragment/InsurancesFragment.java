@@ -10,9 +10,13 @@ import android.view.ViewGroup;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.controller.adapter.InsurancesListAdapter;
+import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
 import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
 import com.panichmaxim.alphastrah.presenter.InsurancesPresenter;
 import com.panichmaxim.alphastrah.ui.view.InsurancesView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +26,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
     private InsurancesListAdapter mAdapter;
-
+    private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_insurances_list, container, false);
@@ -35,7 +39,9 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
         contentView.setOnRefreshListener(this);
         mAdapter = new InsurancesListAdapter(mRecyclerView, getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
+        // Adding sections
+        mSectionedAdapter = new SimpleSectionedRecyclerViewAdapter(getActivity(),R.layout.section,R.id.section_text, mAdapter);
+        mRecyclerView.setAdapter(mSectionedAdapter);
         loadData(false);
     }
 
@@ -56,6 +62,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
 
     @Override
     public void setData(InsurancesInfo insurancesInfo) {
+        mSectionedAdapter.setSections(insurancesInfo.sortAndGetSections());
         mAdapter.setData(insurancesInfo);
         mAdapter.notifyDataSetChanged();
     }

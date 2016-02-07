@@ -4,13 +4,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
-import com.panichmaxim.alphastrah.model.network.location.Address;
+import com.panichmaxim.alphastrah.model.network.location.NWAddress;
 
 import java.util.Date;
 
-public class InsuranceParticipant {
+public class NWInsuranceParticipant {
     @SerializedName("address")
-    private Address mAddress;
+    private NWAddress mAddress;
     @SerializedName("birth_date")
     private Date mBirthday;
     @SerializedName("contact_information")
@@ -45,7 +45,7 @@ public class InsuranceParticipant {
     }
 
     @Nullable
-    public String getMiddleName() {
+    public String getPatronymic() {
         return this.mPatronymic;
     }
 
@@ -65,7 +65,7 @@ public class InsuranceParticipant {
     }
 
     @Nullable
-    public Address getAddress() {
+    public NWAddress getAddress() {
         return this.mAddress;
     }
 

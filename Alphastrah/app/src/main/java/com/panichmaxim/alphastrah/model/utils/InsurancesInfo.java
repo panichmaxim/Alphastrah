@@ -1,9 +1,9 @@
 package com.panichmaxim.alphastrah.model.utils;
 
-import com.panichmaxim.alphastrah.model.network.insurance.Insurance;
-import com.panichmaxim.alphastrah.model.network.insurance.InsuranceCategory;
-import com.panichmaxim.alphastrah.model.network.notification.Notification;
-
+import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
+import com.panichmaxim.alphastrah.model.db.insurance.Insurance;
+import com.panichmaxim.alphastrah.model.db.insurance.InsuranceCategory;
+import com.panichmaxim.alphastrah.model.db.notification.Notification;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +16,26 @@ public class InsurancesInfo {
         mInsurancesData = new ArrayList<>();
         mNotificationData = new ArrayList<>();
         mInsuranceCategoryData = new ArrayList<>();
+    }
+
+    public SimpleSectionedRecyclerViewAdapter.Section[] sortAndGetSections() {
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
+        List<Insurance> sortedList = new ArrayList<>();
+        int i = 0;
+        for (InsuranceCategory category: mInsuranceCategoryData) {
+            boolean hasCategory = false;
+            for (Insurance insurance: mInsurancesData) {
+                if (category.getmProductIds().contains(insurance.getmInsuranceProduct())) {
+                    hasCategory = true;
+                    sortedList.add(insurance);
+                }
+            }
+            if (hasCategory) {
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(i,category.getmTitle()));
+                i++;
+            }
+        }
+        return sections.toArray(new SimpleSectionedRecyclerViewAdapter.Section[sections.size()]);
     }
     public List<Insurance> getmInsurancesData() {
         return mInsurancesData;
@@ -41,7 +61,4 @@ public class InsurancesInfo {
         this.mInsuranceCategoryData = mInsuranceCategoryData;
     }
 
-    public boolean isReady () {
-        return mInsurancesData != null && mNotificationData != null && mInsuranceCategoryData != null;
-    }
 }

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.controller.adapter.NotificationsListAdapter;
-import com.panichmaxim.alphastrah.model.network.notification.Notification;
+import com.panichmaxim.alphastrah.model.network.notification.NWNotification;
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class NotificationsActity extends AppCompatActivity {
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
-    private List<Notification> notifications;
+    private List<NWNotification> notifications;
     private NotificationsListAdapter mAdapter;
 
     @Override
@@ -27,7 +27,7 @@ public class NotificationsActity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
         ButterKnife.bind(this);
-        notifications = (List<Notification>) getIntent().getExtras().getSerializable("nodes");
+        notifications = (List<NWNotification>) getIntent().getExtras().getSerializable("nodes");
         mAdapter = new NotificationsListAdapter();
         mAdapter.setData(notifications);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

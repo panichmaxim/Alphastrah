@@ -3,11 +3,11 @@ package com.panichmaxim.alphastrah.model.network.insurance;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
-import com.panichmaxim.alphastrah.model.network.location.Coordinate;
+import com.panichmaxim.alphastrah.model.network.location.NWCoordinate;
 
-public class InsuranceField {
+public class NWInsuranceField {
     @SerializedName("coordinate")
-    private Coordinate mCoordinate;
+    private NWCoordinate mCoordinate;
     @SerializedName("text")
     private String mText;
     @SerializedName("title")
@@ -31,7 +31,7 @@ public class InsuranceField {
     }
 
     @Nullable
-    public Coordinate getCoordinate() {
+    public NWCoordinate getCoordinate() {
         return this.mCoordinate;
     }
 }

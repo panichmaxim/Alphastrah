@@ -1,16 +1,16 @@
 package com.panichmaxim.alphastrah.model.utils;
 
 import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
-import com.panichmaxim.alphastrah.model.network.insurance.Insurance;
-import com.panichmaxim.alphastrah.model.network.insurance.InsuranceCategory;
-import com.panichmaxim.alphastrah.model.network.notification.Notification;
+import com.panichmaxim.alphastrah.model.network.insurance.NWInsurance;
+import com.panichmaxim.alphastrah.model.network.insurance.NWInsuranceCategory;
+import com.panichmaxim.alphastrah.model.network.notification.NWNotification;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InsurancesInfo {
-    private List<Insurance> mInsurancesData;
-    private List<Notification> mNotificationData;
-    private List<InsuranceCategory> mInsuranceCategoryData;
+    private List<NWInsurance> mInsurancesData;
+    private List<NWNotification> mNotificationData;
+    private List<NWInsuranceCategory> mInsuranceCategoryData;
 
     public InsurancesInfo() {
         mInsurancesData = new ArrayList<>();
@@ -20,11 +20,11 @@ public class InsurancesInfo {
 
     public SimpleSectionedRecyclerViewAdapter.Section[] sortAndGetSections() {
         List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-        List<Insurance> sortedList = new ArrayList<>();
+        List<NWInsurance> sortedList = new ArrayList<>();
         int i = 0;
-        for (InsuranceCategory category: mInsuranceCategoryData) {
+        for (NWInsuranceCategory category: mInsuranceCategoryData) {
             boolean hasCategory = false;
-            for (Insurance insurance: mInsurancesData) {
+            for (NWInsurance insurance: mInsurancesData) {
                 if (category.getProductIds().contains(insurance.getInsuranceProduct())) {
                     hasCategory = true;
                     sortedList.add(insurance);
@@ -37,27 +37,23 @@ public class InsurancesInfo {
         }
         return sections.toArray(new SimpleSectionedRecyclerViewAdapter.Section[sections.size()]);
     }
-    public List<Insurance> getmInsurancesData() {
+    public List<NWInsurance> getmInsurancesData() {
         return mInsurancesData;
     }
 
-    public List<Notification> getmNotificationData() {
+    public List<NWNotification> getmNotificationData() {
         return mNotificationData;
     }
 
-    public List<InsuranceCategory> getmInsuranceCategoryData() {
-        return mInsuranceCategoryData;
-    }
-
-    public void setmInsurancesData(List<Insurance> mInsurancesData) {
+    public void setmInsurancesData(List<NWInsurance> mInsurancesData) {
         this.mInsurancesData = mInsurancesData;
     }
 
-    public void setmNotificationData(List<Notification> mNotificationData) {
+    public void setmNotificationData(List<NWNotification> mNotificationData) {
         this.mNotificationData = mNotificationData;
     }
 
-    public void setmInsuranceCategoryData(List<InsuranceCategory> mInsuranceCategoryData) {
+    public void setmInsuranceCategoryData(List<NWInsuranceCategory> mInsuranceCategoryData) {
         this.mInsuranceCategoryData = mInsuranceCategoryData;
     }
 

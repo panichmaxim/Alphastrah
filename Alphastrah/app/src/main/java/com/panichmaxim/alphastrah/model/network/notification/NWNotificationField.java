@@ -2,10 +2,9 @@ package com.panichmaxim.alphastrah.model.network.notification;
 
 import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
+import com.panichmaxim.alphastrah.model.utils.ModelObject;
 
-import java.io.Serializable;
-
-public class NotificationField implements Serializable {
+public class NWNotificationField extends ModelObject {
     @SerializedName("title")
     private String mTitle;
     @SerializedName("value")

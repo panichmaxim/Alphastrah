@@ -4,6 +4,10 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
     defaultConfig {
         applicationId "com.panichmaxim.alphastrah"
         minSdkVersion 14
@@ -29,10 +33,11 @@ dependencies {
     compile "com.android.support:design:$supportVersion"
     compile "com.android.support:support-v4:$supportVersion"
     compile "com.android.support:cardview-v7:$supportVersion"
+    compile "com.hannesdorfmann.mosby:mvp:$mosbyVersion"
+    compile "com.hannesdorfmann.mosby:viewstate:$mosbyVersion"
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile "com.hannesdorfmann.mosby:mvp:$mosbyVersion"
-    compile "com.hannesdorfmann.mosby:viewstate:$mosbyVersion"
+    compile 'io.realm:realm-android:0.87.4'
 }

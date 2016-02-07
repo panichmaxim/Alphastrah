@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.panichmaxim.alphastrah.R;
-import com.panichmaxim.alphastrah.model.network.notification.Notification;
+import com.panichmaxim.alphastrah.model.network.notification.NWNotification;
 import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
 import com.panichmaxim.alphastrah.ui.activity.NotificationsActity;
 import java.util.ArrayList;
@@ -42,8 +42,8 @@ public class InsurancesListAdapter extends RecyclerView.Adapter<InsurancesListAd
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, NotificationsActity.class);
-            ArrayList<Notification> notifications = new ArrayList<>();
-            for (Notification node : mNodes.getmNotificationData()) {
+            ArrayList<NWNotification> notifications = new ArrayList<>();
+            for (NWNotification node : mNodes.getmNotificationData()) {
                 if (mNodes.getmInsurancesData().get(((SimpleSectionedRecyclerViewAdapter) mRecyclerView.getAdapter()).sectionedPositionToPosition(mRecyclerView.indexOfChild(v))).getId().equals(node.getInsuranceId()))  notifications.add(node);
             }
             intent.putExtra("nodes", notifications);

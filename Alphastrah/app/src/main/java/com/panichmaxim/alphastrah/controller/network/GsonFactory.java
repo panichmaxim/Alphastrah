@@ -14,4 +14,7 @@ public class GsonFactory {
         return gsonBuilder.create();
     }
 
+    public static Gson createDatabase() {
+        return new GsonBuilder().create();
+    }
 }

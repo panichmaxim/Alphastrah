@@ -39,7 +39,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'io.realm:realm-android:0.87.4'
     compile 'com.annimon:stream:1.0.6'
     compile 'se.simbio.encryption:library:1.2.0'
 }

@@ -7,16 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
-import com.panichmaxim.alphastrah.App;
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.controller.adapter.NotificationsListAdapter;
-import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
-import com.panichmaxim.alphastrah.model.db.notification.Notification;
+import com.panichmaxim.alphastrah.controller.db.DBFactory;
 import com.panichmaxim.alphastrah.model.network.notification.NWNotification;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,9 +27,9 @@ public class NotificationsActity extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
         ButterKnife.bind(this);
         String id = getIntent().getStringExtra("id");
-        ArrayList<Notification> sortedNotifications = new ArrayList<>();
-        for (Notification node : App.getRealm().where(Notification.class).findAll()) {
-            if (id.equals(node.getmInsuranceId()))  sortedNotifications.add(node);
+        ArrayList<NWNotification> sortedNotifications = new ArrayList<>();
+        for (NWNotification node : DBFactory.create().getNotificationEndpoint().getItems()) {
+            if (id.equals(node.getInsuranceId()))  sortedNotifications.add(node);
         }
         mAdapter = new NotificationsListAdapter();
         mAdapter.setData(sortedNotifications);

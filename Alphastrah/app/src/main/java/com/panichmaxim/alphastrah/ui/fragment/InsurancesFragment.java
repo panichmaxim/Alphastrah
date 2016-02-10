@@ -11,7 +11,7 @@ import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.controller.adapter.InsurancesListAdapter;
 import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
-import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
+import com.panichmaxim.alphastrah.model.utils.InsurancesListData;
 import com.panichmaxim.alphastrah.presenter.InsurancesPresenter;
 import com.panichmaxim.alphastrah.ui.view.InsurancesView;
 
@@ -22,7 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, InsurancesInfo, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
+public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, InsurancesListData, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
     private InsurancesListAdapter mAdapter;
@@ -61,7 +61,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
     }
 
     @Override
-    public void setData(InsurancesInfo insurancesInfo) {
+    public void setData(InsurancesListData insurancesInfo) {
         mSectionedAdapter.setSections(insurancesInfo.sortAndGetSections());
         mAdapter.setData(insurancesInfo);
         mAdapter.notifyDataSetChanged();

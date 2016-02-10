@@ -5,41 +5,40 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.function.Function;
 import com.panichmaxim.alphastrah.controller.db.Database;
 import com.panichmaxim.alphastrah.controller.db.DatabaseEndpoint;
-import com.panichmaxim.alphastrah.model.db.insurance.Insurance;
-import com.panichmaxim.alphastrah.model.db.insurance.InsuranceCategory;
-import com.panichmaxim.alphastrah.model.db.notification.Notification;
 import com.panichmaxim.alphastrah.model.network.insurance.NWInsurance;
+import com.panichmaxim.alphastrah.model.network.insurance.NWInsuranceCategory;
+import com.panichmaxim.alphastrah.model.network.notification.NWNotification;
 
 public class JsonDb implements Database {
 
-    private DatabaseEndpoint<InsuranceCategory> mInsuranceCategoryEndpoint;
+    private DatabaseEndpoint<NWInsuranceCategory> mInsuranceCategoryEndpoint;
     private DatabaseEndpoint<NWInsurance> mInsuranceEndpoint;
-    private DatabaseEndpoint<Notification> mNotificationEndpoint;
+    private DatabaseEndpoint<NWNotification> mNotificationEndpoint;
 
     public void init(@NonNull Context context) {
-        this.mInsuranceCategoryEndpoint = new JsonEndpoint(new Function<InsuranceCategory, String>() {
+        this.mInsuranceCategoryEndpoint = new JsonEndpoint(new Function<NWInsuranceCategory, String>() {
             @Override
-            public String apply(InsuranceCategory value) {
-                return value.getmId();
+            public String apply(NWInsuranceCategory value) {
+                return value.getId();
             }
-        } , "InsuranceCategory", context, InsuranceCategory.class);
-        this.mNotificationEndpoint = new JsonEndpoint(new Function<Notification, String>() {
+        } , "InsuranceCategory", context, NWInsuranceCategory.class);
+        this.mNotificationEndpoint = new JsonEndpoint(new Function<NWNotification, String>() {
             @Override
-            public String apply(Notification value) {
-                return value.getmId();
+            public String apply(NWNotification value) {
+                return value.getId();
             }
-        }, "Notification", context, Notification.class);
-        this.mInsuranceEndpoint = new JsonEndpoint(new Function<Insurance, String>() {
+        }, "Notification", context, NWNotification.class);
+        this.mInsuranceEndpoint = new JsonEndpoint(new Function<NWInsurance, String>() {
             @Override
-            public String apply(Insurance value) {
-                return value.getmId();
+            public String apply(NWInsurance value) {
+                return value.getId();
             }
         }, "Insurance", context, NWInsurance.class);
     }
 
     @NonNull
     @Override
-    public DatabaseEndpoint<InsuranceCategory> getInsuranceCategoryEndpoint() {
+    public DatabaseEndpoint<NWInsuranceCategory> getInsuranceCategoryEndpoint() {
         return mInsuranceCategoryEndpoint;
     }
 
@@ -51,7 +50,7 @@ public class JsonDb implements Database {
 
     @NonNull
     @Override
-    public DatabaseEndpoint<Notification> getNotificationEndpoint() {
+    public DatabaseEndpoint<NWNotification> getNotificationEndpoint() {
         return mNotificationEndpoint;
     }
 }

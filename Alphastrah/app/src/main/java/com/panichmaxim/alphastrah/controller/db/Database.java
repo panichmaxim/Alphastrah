@@ -3,9 +3,9 @@ package com.panichmaxim.alphastrah.controller.db;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.panichmaxim.alphastrah.model.db.insurance.Insurance;
 import com.panichmaxim.alphastrah.model.db.insurance.InsuranceCategory;
 import com.panichmaxim.alphastrah.model.db.notification.Notification;
+import com.panichmaxim.alphastrah.model.network.insurance.NWInsurance;
 
 public interface Database {
 
@@ -13,7 +13,7 @@ public interface Database {
     DatabaseEndpoint<InsuranceCategory> getInsuranceCategoryEndpoint();
 
     @NonNull
-    DatabaseEndpoint<Insurance> getInsuranceEndpoint();
+    DatabaseEndpoint<NWInsurance> getInsuranceEndpoint();
 
     @NonNull
     DatabaseEndpoint<Notification> getNotificationEndpoint();

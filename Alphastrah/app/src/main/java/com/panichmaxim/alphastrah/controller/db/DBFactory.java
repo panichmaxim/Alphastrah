@@ -1,7 +1,6 @@
 package com.panichmaxim.alphastrah.controller.db;
 
 import android.support.annotation.NonNull;
-
 import com.panichmaxim.alphastrah.controller.db.json.JsonDb;
 
 public class DBFactory {

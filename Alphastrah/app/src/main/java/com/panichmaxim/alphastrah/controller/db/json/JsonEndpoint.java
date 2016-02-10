@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.util.Log;
-
 import com.annimon.stream.function.Function;
 import com.google.gson.Gson;
 import com.panichmaxim.alphastrah.controller.db.DatabaseEndpoint;
@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.crypto.Cipher;
+
+import se.simbio.encryption.Encryption;
+
 public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private static final String PREFIX_NAME = "json_db_";
     private final Context mContext;
@@ -28,6 +32,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private final Function<T, String> mIdMapper;
     private Collection<T> mItems;
     private final Type mType;
+    private Encryption mEncryption;
 
     JsonEndpoint(@NonNull Function<T, String> idMapper, @NonNull String filename, @NonNull Context context, @NonNull Type type) {
         this.mGson = GsonFactory.createDatabase();
@@ -35,6 +40,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
         this.mFilename = PREFIX_NAME + filename;
         this.mContext = context;
         this.mType = type;
+        this.mEncryption = Encryption.getDefault("Key", "Salt", new byte[16]);
     }
 
     public final synchronized boolean saveItems(@NonNull List<T> items) {
@@ -82,7 +88,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
         FileOutputStream outputStream = null;
         try {
             outputStream = this.mContext.openFileOutput(this.mFilename, 0);
-            outputStream.write(serializedForm.getBytes());
+            outputStream.write(mEncryption.encryptOrNull(serializedForm).getBytes());
             if (outputStream != null) {
                 try {
                     outputStream.close();
@@ -129,7 +135,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
             }
         }
         try {
-            this.mItems = (Collection) this.mGson.fromJson(stringBuilder.toString(), this.mType);
+            this.mItems = (Collection) this.mGson.fromJson(mEncryption.decryptOrNull(stringBuilder.toString()), this.mType);
         } catch (Throwable e22) {
         }
         if (this.mItems == null) {

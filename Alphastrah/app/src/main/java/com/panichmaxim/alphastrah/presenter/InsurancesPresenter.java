@@ -2,6 +2,8 @@ package com.panichmaxim.alphastrah.presenter;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.panichmaxim.alphastrah.App;
+import com.panichmaxim.alphastrah.controller.db.DBFactory;
+import com.panichmaxim.alphastrah.controller.db.Database;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
 import com.panichmaxim.alphastrah.controller.network.InternetConnection;
 import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
@@ -15,9 +17,13 @@ import com.panichmaxim.alphastrah.model.db.insurance.InsuranceCategory;
 import com.panichmaxim.alphastrah.model.db.insurance.InsuranceConverter;
 import com.panichmaxim.alphastrah.model.db.notification.Notification;
 import com.panichmaxim.alphastrah.model.db.notification.NotificationConverter;
+import com.panichmaxim.alphastrah.model.network.insurance.NWInsurance;
 import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
 import com.panichmaxim.alphastrah.utils.SimpleStorage;
 import com.panichmaxim.alphastrah.ui.view.InsurancesView;
+
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -50,9 +56,12 @@ public class InsurancesPresenter extends MvpBasePresenter<InsurancesView> {
                 public void success(ServerResponse<InsurancesResponse> insurances, Response response) {
                     mInsurancesInfo.setmInsurancesData(InsuranceConverter.convertInsuranceList(insurances.getData().getInsurances()));
                     insurancesLoaded = true;
-                    App.getRealm().beginTransaction();
-                    App.getRealm().copyToRealmOrUpdate(mInsurancesInfo.getmInsurancesData());
-                    App.getRealm().commitTransaction();
+                    Database database = DBFactory.create();
+                    database.getInsuranceEndpoint().saveItems(insurances.getData().getInsurances());
+                    List<NWInsurance> test = database.getInsuranceEndpoint().getItems();
+//                    App.getRealm().beginTransaction();
+//                    App.getRealm().copyToRealmOrUpdate(mInsurancesInfo.getmInsurancesData());
+//                    App.getRealm().commitTransaction();
                     if (isViewAttached() && insurancesLoaded && notificationsLoaded && insuranceCategoriesLoaded) {
                         getView().setData(mInsurancesInfo);
                         getView().showContent();
@@ -91,9 +100,6 @@ public class InsurancesPresenter extends MvpBasePresenter<InsurancesView> {
                 public void success(ServerResponse<InsurancesCategoriesResponse> categories, Response response) {
                     mInsurancesInfo.setmInsuranceCategoryData(InsuranceConverter.convertInsuranceCategoryList(categories.getData().getInsuranceCategories()));
                     insuranceCategoriesLoaded = true;
-                    App.getRealm().beginTransaction();
-                    App.getRealm().copyToRealmOrUpdate(mInsurancesInfo.getmInsuranceCategoryData());
-                    App.getRealm().commitTransaction();
                     if (isViewAttached() && insurancesLoaded && notificationsLoaded && insuranceCategoriesLoaded) {
                         getView().setData(mInsurancesInfo);
                         getView().showContent();

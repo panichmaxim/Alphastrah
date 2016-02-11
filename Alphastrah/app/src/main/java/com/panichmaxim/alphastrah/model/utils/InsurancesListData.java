@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InsurancesListData {
-    private List<NWInsurance> mInsurancesData;
-    private List<NWInsuranceCategory> mInsuranceCategoryData;
+    private List<NWInsurance> mInsurancesData = new ArrayList<>();
+    private List<NWInsuranceCategory> mInsuranceCategoryData = new ArrayList<>();
 
     public InsurancesListData() {
-        mInsurancesData = new ArrayList<>();
-        mInsuranceCategoryData = new ArrayList<>();
+    }
+
+    public InsurancesListData(List<NWInsurance> insurancesData, List<NWInsuranceCategory> insuranceCategoryData) {
+        mInsurancesData = insurancesData;
+        mInsuranceCategoryData = insuranceCategoryData;
     }
 
     public SimpleSectionedRecyclerViewAdapter.Section[] sortAndGetSections() {

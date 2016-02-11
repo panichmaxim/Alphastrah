@@ -2,7 +2,6 @@ package com.panichmaxim.alphastrah.ui.activity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;

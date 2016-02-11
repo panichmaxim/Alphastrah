@@ -1,8 +1,8 @@
 package com.panichmaxim.alphastrah.ui.view;
 
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
-import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
+import com.panichmaxim.alphastrah.model.utils.InsurancesListData;
 
-public interface InsurancesView extends MvpLceView<InsurancesInfo> {
+public interface InsurancesView extends MvpLceView<InsurancesListData> {
 
 }

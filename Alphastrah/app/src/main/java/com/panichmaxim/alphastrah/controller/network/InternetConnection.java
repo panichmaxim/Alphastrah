@@ -1,9 +1,5 @@
 package com.panichmaxim.alphastrah.controller.network;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;

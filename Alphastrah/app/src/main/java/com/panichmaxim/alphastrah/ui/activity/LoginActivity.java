@@ -9,6 +9,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -19,6 +20,7 @@ import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
 import com.panichmaxim.alphastrah.presenter.LoginPresenter;
 import com.panichmaxim.alphastrah.ui.view.LoginView;
+import com.redmadrobot.chronos.ChronosConnector;
 
 
 public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
@@ -28,11 +30,32 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Bind(R.id.login_progress) View mProgressView;
     @Bind(R.id.login_form) View mLoginFormView;
 
+    private ChronosConnector mConnector = new ChronosConnector();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        mConnector.onCreate(getPresenter(), savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mConnector.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mConnector.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mConnector.onPause();
     }
 
     @Override
@@ -42,17 +65,12 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
     @OnClick(R.id.email_sign_in_button)
     public void signInButtonClicked(){
-        // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-        // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
         boolean cancel = false;
         View focusView = null;
-
-        // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
@@ -62,8 +80,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             focusView = mPasswordView;
             cancel = true;
         }
-
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -73,12 +89,11 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             focusView = mEmailView;
             cancel = true;
         }
-
         if (cancel) {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            presenter.attemptLogin(email, password);
+            presenter.attemptLogin(email, password, mConnector);
         }
     }
 

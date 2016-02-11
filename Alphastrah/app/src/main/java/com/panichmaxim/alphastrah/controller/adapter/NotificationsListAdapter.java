@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.panichmaxim.alphastrah.R;
-import com.panichmaxim.alphastrah.model.db.notification.Notification;
 import com.panichmaxim.alphastrah.model.network.notification.NWNotification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationsListAdapter extends RecyclerView.Adapter<NotificationsListAdapter.ViewHolder> {
-    private List<Notification> mNodes = new ArrayList<>();
+    private List<NWNotification> mNodes = new ArrayList<>();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,7 +27,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
 
     }
 
-    public void setData(List<Notification> nodes) {
+    public void setData(List<NWNotification> nodes) {
         this.mNodes = nodes;
     }
 
@@ -40,8 +39,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTitle.setText(this.mNodes.get(position).getmTitle());
-        holder.mDescription.setText(this.mNodes.get(position).getmShortDescription());
+        holder.mTitle.setText(this.mNodes.get(position).getTitle());
+        holder.mDescription.setText(this.mNodes.get(position).getShortDescription());
     }
 
     @Override

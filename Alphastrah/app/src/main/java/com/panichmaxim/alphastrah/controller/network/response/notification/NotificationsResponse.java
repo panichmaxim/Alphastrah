@@ -11,7 +11,7 @@ public class NotificationsResponse {
     private List<NWNotification> mNotifications;
 
     @NonNull
-    public List<NWNotification> getmNotifications() {
+    public List<NWNotification> getNotifications() {
         return this.mNotifications;
     }
 }

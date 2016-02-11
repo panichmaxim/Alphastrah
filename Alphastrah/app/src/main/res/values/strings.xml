@@ -8,6 +8,7 @@
     <string name="title_activity_login">Войти</string>
     <string name="title_loading">Загрузка</string>
     <string name="title_activity_notifications">Уведомления</string>
+    <string name="data_load_error">Ошибка при загрузке данных</string>
     <!-- Strings related to login -->
     <string name="login_error">Ошибка при авторизации</string>
     <string name="prompt_email">Email</string>

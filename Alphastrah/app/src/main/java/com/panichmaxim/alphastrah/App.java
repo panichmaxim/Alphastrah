@@ -1,24 +1,37 @@
 package com.panichmaxim.alphastrah;
 
 import android.app.Application;
+import com.panichmaxim.alphastrah.controller.db.DBFactory;
+import com.panichmaxim.alphastrah.controller.network.GsonFactory;
+import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
+import com.panichmaxim.alphastrah.utils.SimpleStorage;
 
-import io.realm.Realm;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
+
 
 public class App extends Application {
 
     private static App sInstance;
-    private static Realm sRealm;
+    private static RestAdapter sRestAdapter;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        sRealm = Realm.getInstance(this);
+        DBFactory.create().init(this);
+        sRestAdapter = new RestAdapter.Builder().setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestInterceptor.RequestFacade request) {
+                request.addHeader("Cookie", "access_token" + "=" + SimpleStorage.getInstance().getToken());
+            }
+        }).setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
     }
 
     public static App getContext() { return sInstance; }
 
-    public static Realm getRealm() {
-        return sRealm;
+    public static RestAdapter getRestAdapter() {
+        return sRestAdapter;
     }
 }

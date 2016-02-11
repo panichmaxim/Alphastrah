@@ -2,25 +2,48 @@ package com.panichmaxim.alphastrah.controller.operations;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
+import com.panichmaxim.alphastrah.controller.network.GsonFactory;
+import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
+import com.panichmaxim.alphastrah.controller.network.ServerApi;
+import com.panichmaxim.alphastrah.controller.network.request.EstablishSessionRequest;
 import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
+import com.panichmaxim.alphastrah.utils.SimpleStorage;
+import com.redmadrobot.chronos.ChronosOperation;
+import com.redmadrobot.chronos.ChronosOperationResult;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
-//public class UserLogin extends ChronosOperation<ServerResponse<AuthorizeResponse>> {
-//    @Nullable
-//    @Override
-//    public ServerResponse<AuthorizeResponse> run() {
-//        final ServerResponse<AuthorizeResponse> result  ;
-//        // here you should write what you do to get the BusinessObject
-//        return result;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public Class<? extends ChronosOperationResult<ServerResponse<AuthorizeResponse>>> getResultClass(){
-//        return Result.class;
-//    }
-//
-//    public final static class Result extends ChronosOperationResult<ServerResponse<AuthorizeResponse>> {
-//    }
-//}
+public class UserLogin extends ChronosOperation<ServerResponse<AuthorizeResponse>> {
+
+    private final String mEmail;
+    private final String mPassword;
+
+    public UserLogin(@NonNull String mEmail, @NonNull String password) {
+        this.mEmail = mEmail;
+        this.mPassword = password;
+    }
+
+    @Nullable
+    @Override
+    public ServerResponse<AuthorizeResponse> run() {
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+        ServerApi serverApi = restAdapter.create(ServerApi.class);
+        ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(mEmail, mPassword));
+        if (response.isSuccessful() && response.getData() != null) {
+            SimpleStorage storage = SimpleStorage.getInstance();
+            storage.saveAuthInfo(response.getData().getSession(), response.getData().getAccount());
+            storage.setPassword(mPassword);
+        }
+        return response;
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends ChronosOperationResult<ServerResponse<AuthorizeResponse>>> getResultClass(){
+        return Result.class;
+    }
+
+    public final static class Result extends ChronosOperationResult<ServerResponse<AuthorizeResponse>> {
+    }
+}

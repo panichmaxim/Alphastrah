@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.panichmaxim.alphastrah.R;
-import com.panichmaxim.alphastrah.model.db.notification.Notification;
-import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
-import com.panichmaxim.alphastrah.ui.activity.NotificationsActity;
-import java.util.ArrayList;
+import com.panichmaxim.alphastrah.model.utils.InsurancesListData;
+import com.panichmaxim.alphastrah.ui.activity.NotificationsActivity;
 
 public class InsurancesListAdapter extends RecyclerView.Adapter<InsurancesListAdapter.ViewHolder> {
 
-    public InsurancesInfo mNodes = new InsurancesInfo();
+    public InsurancesListData mNodes = new InsurancesListData();
     private RecyclerView mRecyclerView;
     private Context context;
 
@@ -41,13 +39,13 @@ public class InsurancesListAdapter extends RecyclerView.Adapter<InsurancesListAd
     private class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, NotificationsActity.class);
-            intent.putExtra("id", mNodes.getmInsurancesData().get(((SimpleSectionedRecyclerViewAdapter) mRecyclerView.getAdapter()).sectionedPositionToPosition(mRecyclerView.indexOfChild(v))).getmId());
+            Intent intent = new Intent(context, NotificationsActivity.class);
+            intent.putExtra("id", mNodes.getmInsurancesData().get(((SimpleSectionedRecyclerViewAdapter) mRecyclerView.getAdapter()).sectionedPositionToPosition(mRecyclerView.indexOfChild(v))).getId());
             context.startActivity(intent);
         }
     }
 
-    public void setData(InsurancesInfo nodes) {
+    public void setData(InsurancesListData nodes) {
         this.mNodes = nodes;
     }
 
@@ -60,8 +58,8 @@ public class InsurancesListAdapter extends RecyclerView.Adapter<InsurancesListAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTitle.setText(this.mNodes.getmInsurancesData().get(position).getmTitle());
-        holder.mProperty.setText(this.mNodes.getmInsurancesData().get(position).getmInsuredObject());
+        holder.mTitle.setText(this.mNodes.getmInsurancesData().get(position).getTitle());
+        holder.mProperty.setText(this.mNodes.getmInsurancesData().get(position).getInsuredObject());
     }
 
     @Override

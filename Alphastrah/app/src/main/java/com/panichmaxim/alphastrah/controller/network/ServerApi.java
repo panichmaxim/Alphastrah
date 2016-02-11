@@ -14,16 +14,15 @@ import com.panichmaxim.alphastrah.controller.network.response.notification.Notif
 
 public interface ServerApi {
     @POST("/sessions/establish")
-    void authorize(@Body @NonNull EstablishSessionRequest establishSessionRequest, Callback<ServerResponse<AuthorizeResponse>> callback);
+    ServerResponse<AuthorizeResponse> authorize(@Body @NonNull EstablishSessionRequest establishSessionRequest);
 
     @GET("/insurances")
-    void getInsurances(Callback<ServerResponse<InsurancesResponse>> callback);
+    ServerResponse<InsurancesResponse> getInsurances();
 
     @GET("/insurances/categories")
-    void getInsuranceCategories(Callback<ServerResponse<InsurancesCategoriesResponse>> callback);
+    ServerResponse<InsurancesCategoriesResponse> getInsuranceCategories();
 
     @GET("/notifications")
-    void getNotifications(Callback<ServerResponse<NotificationsResponse>> callback);
-
+    ServerResponse<NotificationsResponse> getNotifications();
 
 }

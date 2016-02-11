@@ -1,6 +1,9 @@
 package com.panichmaxim.alphastrah.ui.fragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,22 +14,19 @@ import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.controller.adapter.InsurancesListAdapter;
 import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
-import com.panichmaxim.alphastrah.model.utils.InsurancesInfo;
+import com.panichmaxim.alphastrah.model.utils.InsurancesListData;
 import com.panichmaxim.alphastrah.presenter.InsurancesPresenter;
 import com.panichmaxim.alphastrah.ui.view.InsurancesView;
+import com.redmadrobot.chronos.ChronosConnector;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
-
-public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, InsurancesInfo, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
+public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, InsurancesListData, InsurancesView, InsurancesPresenter> implements InsurancesView, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+
     private InsurancesListAdapter mAdapter;
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
+    private ChronosConnector mConnector = new ChronosConnector();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_insurances_list, container, false);
@@ -35,6 +35,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
         super.onViewCreated(view, savedInstance);
+        mConnector.onCreate(getPresenter(), savedInstance);
         ButterKnife.bind(this, view);
         contentView.setOnRefreshListener(this);
         mAdapter = new InsurancesListAdapter(mRecyclerView, getActivity());
@@ -46,8 +47,26 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mConnector.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mConnector.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mConnector.onPause();
+    }
+
+    @Override
     public void loadData(boolean pullToRefresh) {
-        presenter.loadData(pullToRefresh);
+        presenter.loadData(pullToRefresh, mConnector);
     }
 
     @Override
@@ -61,7 +80,7 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
     }
 
     @Override
-    public void setData(InsurancesInfo insurancesInfo) {
+    public void setData(InsurancesListData insurancesInfo) {
         mSectionedAdapter.setSections(insurancesInfo.sortAndGetSections());
         mAdapter.setData(insurancesInfo);
         mAdapter.notifyDataSetChanged();

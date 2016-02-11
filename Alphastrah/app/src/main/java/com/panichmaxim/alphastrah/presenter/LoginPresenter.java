@@ -7,8 +7,10 @@ import com.panichmaxim.alphastrah.controller.network.ServerApi;
 import com.panichmaxim.alphastrah.controller.network.request.EstablishSessionRequest;
 import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
+import com.panichmaxim.alphastrah.controller.operations.UserLogin;
 import com.panichmaxim.alphastrah.ui.view.LoginView;
 import com.panichmaxim.alphastrah.utils.SimpleStorage;
+import com.redmadrobot.chronos.ChronosConnector;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -18,26 +20,13 @@ import retrofit.converter.GsonConverter;
 
 public class LoginPresenter extends MvpBasePresenter<LoginView> {
 
-    public void attemptLogin(String email, final String password){
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
-        ServerApi serverApi = restAdapter.create(ServerApi.class);
-        serverApi.authorize(new EstablishSessionRequest(email, password), new Callback<ServerResponse<AuthorizeResponse>>() {
+    public void attemptLogin(String email, final String password, ChronosConnector mConnector){
+        mConnector.runOperation(new UserLogin(email, password), false);
+    }
 
-            @Override
-            public void success(ServerResponse<AuthorizeResponse> auth, Response response) {
-                SimpleStorage storage = SimpleStorage.getInstance();
-                storage.saveAuthInfo(auth.getData().getSession(), auth.getData().getAccount());
-                storage.setPassword(password);
-                if (isViewAttached()) {
-                    getView().loginCompleted(auth);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-
-            }
-
-        });
+    public void onOperationFinished(final UserLogin.Result result) {
+        if (isViewAttached()) {
+            getView().loginCompleted(result.getOutput());
+        }
     }
 }

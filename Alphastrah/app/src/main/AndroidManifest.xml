@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.NotificationsActity"
+            android:name=".ui.activity.NotificationsActivity"
             android:label="@string/title_activity_notifications"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>

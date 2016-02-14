@@ -1,15 +1,14 @@
 package com.panichmaxim.alphastrah.controller.db.json;
 
 import android.content.Context;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Base64;
-import android.util.Log;
 import com.annimon.stream.function.Function;
 import com.google.gson.Gson;
 import com.panichmaxim.alphastrah.controller.db.DatabaseEndpoint;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
+import com.panichmaxim.alphastrah.utils.Encryptor;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,11 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.crypto.Cipher;
-
 import se.simbio.encryption.Encryption;
 
 public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
@@ -29,11 +25,11 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private final Context mContext;
     private final String mFilename;
     private final Gson mGson;
-    private final Type mType;
     private final Function<T, String> mIdMapper;
-    private Collection<T> mItems;
+    private HashMap<String, T> mItems;
+    private final Type mType;
     private Encryption mEncryption;
-
+    
     JsonEndpoint(@NonNull Function<T, String> idMapper, @NonNull String filename, @NonNull Context context, @NonNull Type type) {
         this.mGson = GsonFactory.createDatabase();
         this.mIdMapper = idMapper;
@@ -42,55 +38,50 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
         this.mType = type;
         this.mEncryption = Encryption.getDefault("Key", "Salt", new byte[16]);
     }
-
-    public final synchronized boolean saveItems(@NonNull List<T> items) {
-        this.mItems = new ArrayList(items);
+    
+    public final synchronized void saveItems(@NonNull List<T> items) {
+        if (mItems == null) restore();
+        for (T item : items) {
+            mItems.put(this.mIdMapper.apply(item), item);
+        }
         save();
-        return !this.mItems.isEmpty();
     }
-
+    
+    @Override
+    public void saveItem(@NonNull T item) {
+        if (this.mItems == null) restore();
+        mItems.put(this.mIdMapper.apply(item), item);
+        save();
+    }
+    
     @NonNull
     public final synchronized List<T> getItems() {
-        if (this.mItems == null) {
-            restore();
-        }
-        return new ArrayList(this.mItems);
+        if (this.mItems == null) restore();
+        return new ArrayList(this.mItems.values());
     }
-
+    
     @Nullable
     public final synchronized T getItem(@NonNull String id) {
-        T result = null;
-        if (this.mItems == null) {
-            restore();
-        }
-        for (T item : this.mItems) {
-            if ((this.mIdMapper.apply(item)).equals(id)) {
-                result = item;
-                break;
-            }
-        }
-        return result;
+        if (this.mItems == null) restore();
+        return mItems.get(id);
     }
-
+    
     public final synchronized void removeItem(@NonNull String id) {
-        T item = getItem(id);
-        if (item != null) {
-            this.mItems.remove(item);
-            save();
-        }
+        if (this.mItems == null) restore();
+        this.mItems.remove(id);
+        save();
     }
-
+    
     private void save() {
-        String serializedForm = this.mGson.toJson(this.mItems);
         FileOutputStream outputStream = null;
         try {
-            outputStream = this.mContext.openFileOutput(this.mFilename, 0);
-            outputStream.write(mEncryption.encryptOrNull(serializedForm).getBytes());
+            String serializedForm = Encryptor.encrypt(Encryptor.seedValue, this.mGson.toJson(this.mItems));
+            outputStream = this.mContext.openFileOutput(this.mFilename, Context.MODE_PRIVATE);
+            outputStream.write(serializedForm.getBytes());
             if (outputStream != null) {
                 try {
                     outputStream.close();
                 } catch (IOException e) {
-
                 }
             }
         } catch (Throwable e2) {
@@ -98,11 +89,12 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
                 try {
                     outputStream.close();
                 } catch (IOException e3) {
+                    
                 }
             }
         }
     }
-
+    
     private void restore() {
         FileInputStream fileInputStream = null;
         StringBuilder stringBuilder = new StringBuilder();
@@ -122,6 +114,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
                 try {
                     fileInputStream.close();
                 } catch (IOException e) {
+                    
                 }
             }
         } catch (Throwable e2) {
@@ -129,17 +122,18 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
                 try {
                     fileInputStream.close();
                 } catch (IOException e3) {
-
+                    
                 }
             }
         }
         try {
-            this.mItems = this.mGson.fromJson(mEncryption.decryptOrNull(stringBuilder.toString()), this.mType);
-        } catch (Throwable e22) {
+            this.mItems = this.mGson.fromJson(Encryptor.decrypt(Encryptor.seedValue, stringBuilder.toString()), this.mType);
+        } catch (Throwable e2) {
+            
         }
         if (this.mItems == null) {
-            this.mItems = new ArrayList();
+            this.mItems = new HashMap<>();
         }
     }
-
+    
 }

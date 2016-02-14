@@ -35,8 +35,8 @@ Sixth.java                     |4    | + |
 Задание                        |Балл | ? |Оценка
 -------------------------------|-----|---|------
 *Базовая часть*                |20   | + |
-ORM one to one                 |3    | + |
-ORM one to many                |6    | + |
+ORM one to one                 |3    |   |
+ORM one to many                |6    |   |
 ORM many to many               |9    |   |
 Thread safety                  |5    | + |
 Bulk insert                    |5    |   |

@@ -13,5 +13,7 @@ public interface DatabaseEndpoint<T> {
 
     void removeItem(@NonNull String str);
 
-    boolean saveItems(@NonNull List<T> list);
+    void saveItems(@NonNull List<T> list);
+
+    void saveItem(@NonNull T item);
 }

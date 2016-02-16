@@ -20,6 +20,7 @@ import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
 import com.panichmaxim.alphastrah.presenter.LoginPresenter;
 import com.panichmaxim.alphastrah.ui.view.LoginView;
+import com.panichmaxim.alphastrah.utils.Security;
 import com.redmadrobot.chronos.ChronosConnector;
 
 
@@ -37,6 +38,13 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        try {
+            String test = "My text security";
+            test = Security.encrypt(test);
+            test = Security.decrypt(test);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mConnector.onCreate(getPresenter(), savedInstanceState);
     }
 

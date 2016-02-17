@@ -2,11 +2,16 @@ package com.panichmaxim.alphastrah.utils;
 
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Base64;
+
 import com.google.gson.Gson;
 import com.panichmaxim.alphastrah.App;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
 import com.panichmaxim.alphastrah.model.network.auth.NWAccount;
 import com.panichmaxim.alphastrah.model.network.auth.NWSession;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public final class SimpleStorage {
 
@@ -19,6 +24,7 @@ public final class SimpleStorage {
     private final String SESSION = "SESSION";
     private final String ACCOUNT = "ACCOUNT";
     private final String PASSWORD = "PASSWORD";
+    private final String CRYPTOKEY = "CRYPTOKEY";
 
     private SimpleStorage() {
         this.mGson = GsonFactory.create();
@@ -36,6 +42,16 @@ public final class SimpleStorage {
             }
         }
         return localInstance;
+    }
+
+    public final SecretKeySpec getCryptoKey() {
+        return new SecretKeySpec(Base64.decode(mPreferences.getString(CRYPTOKEY, ""), Base64.DEFAULT), "AES");
+    }
+
+    public final void saveCryptoKey(SecretKeySpec key) {
+        SharedPreferences.Editor ed = mPreferences.edit();
+        ed.putString(CRYPTOKEY, Base64.encodeToString(key.getEncoded(), Base64.DEFAULT));
+        ed.commit();
     }
 
     public final void logout() {

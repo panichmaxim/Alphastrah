@@ -38,13 +38,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        try {
-            String test = "My text security";
-            test = Security.encrypt(test);
-            test = Security.decrypt(test);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         mConnector.onCreate(getPresenter(), savedInstanceState);
     }
 

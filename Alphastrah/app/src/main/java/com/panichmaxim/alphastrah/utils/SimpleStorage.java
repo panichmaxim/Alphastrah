@@ -15,7 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 public final class SimpleStorage {
 
-    private static final int CURRENT_VERSION = 1;
     private static volatile SimpleStorage sInstance;
     private final SharedPreferences mPreferences;
     private final Gson mGson;
@@ -45,6 +44,7 @@ public final class SimpleStorage {
     }
 
     public final SecretKeySpec getCryptoKey() {
+        if (!mPreferences.contains(CRYPTOKEY)) return null;
         return new SecretKeySpec(Base64.decode(mPreferences.getString(CRYPTOKEY, ""), Base64.DEFAULT), "AES");
     }
 
@@ -54,7 +54,7 @@ public final class SimpleStorage {
         ed.commit();
     }
 
-    public final void logout() {
+    public final void logout() throws Exception {
         setPassword(null);
         saveAuthInfo(null, null);
     }
@@ -89,14 +89,14 @@ public final class SimpleStorage {
         return !TextUtils.isEmpty(getToken());
     }
 
-    public final void setPassword(String password) {
+    public final void setPassword(String password) throws Exception {
         SharedPreferences.Editor ed = mPreferences.edit();
-        ed.putString(PASSWORD, password);
+        ed.putString(PASSWORD, Security.encrypt(password));
         ed.commit();
     }
 
-    public final String getPassword() {
-        return this.mPreferences.getString(PASSWORD, null);
+    public final String getPassword() throws Exception {
+        return Security.decrypt(this.mPreferences.getString(PASSWORD, null));
     }
 
 }

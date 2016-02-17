@@ -6,6 +6,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +41,20 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mConnector.onCreate(getPresenter(), savedInstanceState);
+        if (Security.checkRoot()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setTitle("Внимание!")
+                    .setMessage("Не проводите важные операции на данном устростве")
+                    .setCancelable(false)
+                    .setNegativeButton("Продолжить",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.panichmaxim.alphastrah.controller.operations;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
 import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
 import com.panichmaxim.alphastrah.controller.network.ServerApi;
@@ -33,7 +35,11 @@ public class UserLogin extends ChronosOperation<ServerResponse<AuthorizeResponse
         if (response.isSuccessful() && response.getData() != null) {
             SimpleStorage storage = SimpleStorage.getInstance();
             storage.saveAuthInfo(response.getData().getSession(), response.getData().getAccount());
-            storage.setPassword(mPassword);
+            try {
+                storage.setPassword(mPassword);
+            } catch (Exception e) {
+                Log.e("Error", "Ups, cant save password");
+            }
         }
         return response;
     }

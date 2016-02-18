@@ -14,6 +14,12 @@ import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResp
 import com.panichmaxim.alphastrah.utils.SimpleStorage;
 import com.redmadrobot.chronos.ChronosOperation;
 import com.redmadrobot.chronos.ChronosOperationResult;
+import com.squareup.okhttp.CertificatePinner;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+
+import java.io.IOException;
+
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -30,7 +36,7 @@ public class UserLogin extends ChronosOperation<ServerResponse<AuthorizeResponse
     @Nullable
     @Override
     public ServerResponse<AuthorizeResponse> run() {
-        RestAdapter restAdapter = new RestAdapter.Builder().setClient(ClientFactory.create()).setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+        RestAdapter restAdapter = new RestAdapter.Builder().setClient(ClientFactory.create()).setEndpoint(NetworkConstants.SERVER_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
         ServerApi serverApi = restAdapter.create(ServerApi.class);
         ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(mEmail, mPassword));
         if (response.isSuccessful() && response.getData() != null) {

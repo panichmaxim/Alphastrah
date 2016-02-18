@@ -27,7 +27,7 @@ public class App extends Application {
             public void intercept(RequestInterceptor.RequestFacade request) {
                 request.addHeader("Cookie", "access_token" + "=" + SimpleStorage.getInstance().getToken());
             }
-        }).setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+        }).setEndpoint(NetworkConstants.SERVER_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
     }
 
     public static App getContext() { return sInstance; }

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.panichmaxim.alphastrah.controller.network.ClientFactory;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
 import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
 import com.panichmaxim.alphastrah.controller.network.ServerApi;
@@ -29,7 +30,7 @@ public class UserLogin extends ChronosOperation<ServerResponse<AuthorizeResponse
     @Nullable
     @Override
     public ServerResponse<AuthorizeResponse> run() {
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+        RestAdapter restAdapter = new RestAdapter.Builder().setClient(ClientFactory.create()).setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
         ServerApi serverApi = restAdapter.create(ServerApi.class);
         ServerResponse<AuthorizeResponse> response = serverApi.authorize(new EstablishSessionRequest(mEmail, mPassword));
         if (response.isSuccessful() && response.getData() != null) {

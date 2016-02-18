@@ -55,6 +55,20 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             AlertDialog alert = builder.create();
             alert.show();
         }
+        if (!Security.checkWifiSecurity()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setTitle("Внимание!")
+                    .setMessage("Вы подключены к небезопасной wifi сети")
+                    .setCancelable(false)
+                    .setNegativeButton("Продолжить",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     @Override

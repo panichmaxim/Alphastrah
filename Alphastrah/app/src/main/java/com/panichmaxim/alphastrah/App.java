@@ -2,6 +2,7 @@ package com.panichmaxim.alphastrah;
 
 import android.app.Application;
 import com.panichmaxim.alphastrah.controller.db.DBFactory;
+import com.panichmaxim.alphastrah.controller.network.ClientFactory;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
 import com.panichmaxim.alphastrah.controller.network.NetworkConstants;
 import com.panichmaxim.alphastrah.utils.SimpleStorage;
@@ -21,12 +22,12 @@ public class App extends Application {
         super.onCreate();
         sInstance = this;
         DBFactory.create().init(this);
-        sRestAdapter = new RestAdapter.Builder().setRequestInterceptor(new RequestInterceptor() {
+        sRestAdapter = new RestAdapter.Builder().setClient(ClientFactory.create()).setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestInterceptor.RequestFacade request) {
                 request.addHeader("Cookie", "access_token" + "=" + SimpleStorage.getInstance().getToken());
             }
-        }).setEndpoint(NetworkConstants.BASE_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
+        }).setEndpoint(NetworkConstants.SERVER_URL).setConverter(new GsonConverter(GsonFactory.create())).build();
     }
 
     public static App getContext() { return sInstance; }

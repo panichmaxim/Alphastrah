@@ -7,8 +7,7 @@ import com.annimon.stream.function.Function;
 import com.google.gson.Gson;
 import com.panichmaxim.alphastrah.controller.db.DatabaseEndpoint;
 import com.panichmaxim.alphastrah.controller.network.GsonFactory;
-import com.panichmaxim.alphastrah.utils.Encryptor;
-
+import com.panichmaxim.alphastrah.utils.Security;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -75,7 +74,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private void save() {
         FileOutputStream outputStream = null;
         try {
-            String serializedForm = Encryptor.encrypt(Encryptor.seedValue, this.mGson.toJson(this.mItems));
+            String serializedForm = Security.encrypt(this.mGson.toJson(this.mItems));
             outputStream = this.mContext.openFileOutput(this.mFilename, Context.MODE_PRIVATE);
             outputStream.write(serializedForm.getBytes());
             if (outputStream != null) {
@@ -127,7 +126,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
             }
         }
         try {
-            this.mItems = this.mGson.fromJson(Encryptor.decrypt(Encryptor.seedValue, stringBuilder.toString()), this.mType);
+            this.mItems = this.mGson.fromJson(Security.decrypt(stringBuilder.toString()), this.mType);
         } catch (Throwable e2) {
             
         }

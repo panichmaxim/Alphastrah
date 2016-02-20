@@ -42,7 +42,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mConnector.onCreate(getPresenter(), savedInstanceState);
-        if (Security.checkRoot()) {
+        if (Security.isDeviceRooted()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Внимание!")
                     .setMessage("Не проводите важные операции на данном устростве")

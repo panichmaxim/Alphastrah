@@ -4,18 +4,29 @@ import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.security.KeyPairGeneratorSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
+import android.util.Log;
 import com.panichmaxim.alphastrah.App;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.security.Signature;
+import java.util.Calendar;
 import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
+import javax.security.auth.x500.X500Principal;
 
 public class Security {
+
+    private static String sAllias = "MyKey";
 
     public static boolean checkRoot() {
         Process process = null;
@@ -29,38 +40,97 @@ public class Security {
             if (process !=null) process.destroy();
         }
     }
-
-    // http://stackoverflow.com/questions/19957052/android-encryption-pad-block-corrupted-exception
-
+    /*
+    http://stackoverflow.com/questions/19957052/android-encryption-pad-block-corrupted-exception
+    +
+    RSA:
+    http://developer.android.com/intl/ru/reference/android/security/keystore/KeyGenParameterSpec.html
+    http://stackoverflow.com/questions/9658921/encrypting-aes-key-with-rsa-public-key
+    */
     private static SecretKeySpec getKey() throws Exception {
-//        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
-//        keyStore.load(null);
-//        return (SecretKey) keyStore.getKey(alias, null);
         if (SimpleStorage.getInstance().getCryptoKey() == null) {
+            // Generate AES key for data encryption
             byte[] seed = new byte[128];
             SecureRandom sRnd = SecureRandom.getInstance("SHA1PRNG");
             sRnd.nextBytes(seed);
             sRnd.setSeed(seed);
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES);
             keyGenerator.init(128, sRnd);
-            SecretKeySpec keySpec = new SecretKeySpec(keyGenerator.generateKey().getEncoded(), "AES");
-            SimpleStorage.getInstance().saveCryptoKey(keySpec);
-            return keySpec;
+            byte[] key = keyGenerator.generateKey().getEncoded();
+            // Generate RSA key for AES encryption and encrypt
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
+                Calendar start = Calendar.getInstance();
+                Calendar end = Calendar.getInstance();
+                end.add(Calendar.YEAR, 1);
+                KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(App.getContext()).setAlias(sAllias)
+                        .setSubject(new X500Principal("CN=myKey")).setStartDate(start.getTime()).setEndDate(end.getTime()).setSerialNumber(BigInteger.valueOf(1337)).build();
+                keyPairGenerator.initialize(spec);
+                KeyPair keyPair = keyPairGenerator.generateKeyPair();
+//                Signature signature = Signature.getInstance("SHA256withRSA/PSS");
+//                signature.initSign(keyPair.getPrivate());
+                key = encryptAESKey(key);
+            }
+            // Save key
+            SimpleStorage.getInstance().saveCryptoKey(key);
+            return new SecretKeySpec(key, "AES");
         } else {
-            return SimpleStorage.getInstance().getCryptoKey();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                return decryptAESKey(SimpleStorage.getInstance().getCryptoKey());
+            } else {
+                return new SecretKeySpec(SimpleStorage.getInstance().getCryptoKey(), "AES");
+            }
         }
     }
 
-    public static String encrypt(String clearText) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, getKey());
-        return Base64.encodeToString(cipher.doFinal(clearText.getBytes("UTF-8")), Base64.DEFAULT);
+    private static byte[] encryptAESKey (byte[] key)
+    {
+        try {
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore.load(null);
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, keyStore.getCertificate(sAllias).getPublicKey());
+            return cipher.doFinal(key);
+        } catch(Exception e) {
+            System.out.println("Exception encoding the aes key: " + e.getMessage());
+        }
+        return null;
     }
 
-    public static String decrypt(String encryptedText) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, getKey());
-        return new String( cipher.doFinal(Base64.decode(encryptedText, Base64.DEFAULT)), "UTF-8");
+    private static SecretKeySpec decryptAESKey(byte[] data)
+    {
+        try {
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore.load(null);
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, keyStore.getKey(sAllias, null) );
+            return new SecretKeySpec (cipher.doFinal(data), "AES");
+        } catch(Exception e) {
+            System.out.println("Exception decrypting the aes key: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static String encrypt(String clearText) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, getKey());
+            return Base64.encodeToString(cipher.doFinal(clearText.getBytes("UTF-8")), Base64.DEFAULT);
+        } catch (Exception e) {
+            Log.e("Security", "Encryption error");
+            return clearText;
+        }
+    }
+
+    public static String decrypt(String encryptedText) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, getKey());
+            return new String(cipher.doFinal(Base64.decode(encryptedText, Base64.DEFAULT)), "UTF-8");
+        } catch (Exception e) {
+            Log.e("Security", "Decryption error");
+            return encryptedText;
+        }
     }
 
     // http://stackoverflow.com/questions/26881925/how-can-i-to-determine-whether-the-device-is-open-wifi-hotspot-on-android
@@ -72,11 +142,10 @@ public class Security {
         String currentSSID = wi.getSSID();
 
         if (networkList != null) {
-            for (ScanResult network : networkList)
-            {
-                if (currentSSID.equals("\"" + network.SSID + "\"")){
+            for (ScanResult network : networkList) {
+                if (currentSSID.equals("\"" + network.SSID + "\"")) {
                     String Capabilities =  network.capabilities;
-                    return (Capabilities.contains("WPA2") || Capabilities.contains("WPA") || Capabilities.contains("WEP"));
+                    return (Capabilities.contains("WPA2") || Capabilities.contains("WPA"));
                 }
             }
         }

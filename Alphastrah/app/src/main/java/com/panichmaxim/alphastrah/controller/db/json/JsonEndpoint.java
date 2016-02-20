@@ -27,7 +27,6 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private final Function<T, String> mIdMapper;
     private HashMap<String, T> mItems;
     private final Type mType;
-    private Encryption mEncryption;
 
     JsonEndpoint(@NonNull Function<T, String> idMapper, @NonNull String filename, @NonNull Context context, @NonNull Type type) {
         this.mGson = GsonFactory.createDatabase();
@@ -35,7 +34,6 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
         this.mFilename = PREFIX_NAME + filename;
         this.mContext = context;
         this.mType = type;
-        this.mEncryption = Encryption.getDefault("Key", "Salt", new byte[16]);
     }
 
     public final synchronized void saveItems(@NonNull List<T> items) {

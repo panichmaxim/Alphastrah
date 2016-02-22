@@ -2,6 +2,7 @@ package com.panichmaxim.alphastrah.utils;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.security.KeyPairGeneratorSpec;
@@ -12,6 +13,7 @@ import com.panichmaxim.alphastrah.App;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
@@ -150,20 +152,26 @@ public class Security {
             return encryptedText;
         }
     }
-
-    // http://stackoverflow.com/questions/26881925/how-can-i-to-determine-whether-the-device-is-open-wifi-hotspot-on-android
-    // http://stackoverflow.com/questions/28905604/android-detecting-if-wifi-is-wep-wpa-wpa2-etc-programmatically
+    /*
+        http://stackoverflow.com/questions/26881925/how-can-i-to-determine-whether-the-device-is-open-wifi-hotspot-on-android
+        http://stackoverflow.com/questions/28905604/android-detecting-if-wifi-is-wep-wpa-wpa2-etc-programmatically
+    */
     public static boolean checkWifiSecurity() {
         WifiManager wifi = (WifiManager) App.getContext().getSystemService(Context.WIFI_SERVICE);
-        List<ScanResult> networkList = wifi.getScanResults();
-        WifiInfo wi = wifi.getConnectionInfo();
-        String currentSSID = wi.getSSID();
-
-        if (networkList != null) {
-            for (ScanResult network : networkList) {
-                if (currentSSID.equals("\"" + network.SSID + "\"")) {
-                    String Capabilities =  network.capabilities;
-                    return (Capabilities.contains("WPA2") || Capabilities.contains("WPA"));
+        if (wifi != null) {
+            Method[] methods = wifi.getClass().getDeclaredMethods();
+            for (Method m: methods) {
+                if (m.getName().equals("getAuthType")) {
+                    try {
+                        Integer connectionType = (Integer) m.invoke(wifi);
+                        if (connectionType == WifiConfiguration.KeyMgmt.NONE) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } catch (Exception e) {
+                        return false;
+                    }
                 }
             }
         }

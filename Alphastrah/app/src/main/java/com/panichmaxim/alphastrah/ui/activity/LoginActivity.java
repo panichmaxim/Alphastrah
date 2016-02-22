@@ -56,7 +56,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             AlertDialog alert = builder.create();
             alert.show();
         }
-        if (InternetConnection.checkNetworkStatus() && !Security.checkWifiSecurity()) {
+        if (InternetConnection.checkNetworkStatus() && Security.checkWifiSecurity()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Внимание!")
                     .setMessage("Вы подключены к небезопасной wifi сети")

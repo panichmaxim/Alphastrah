@@ -18,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.panichmaxim.alphastrah.R;
+import com.panichmaxim.alphastrah.controller.network.InternetConnection;
 import com.panichmaxim.alphastrah.controller.network.response.ServerResponse;
 import com.panichmaxim.alphastrah.controller.network.response.auth.AuthorizeResponse;
 import com.panichmaxim.alphastrah.presenter.LoginPresenter;
@@ -41,7 +42,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mConnector.onCreate(getPresenter(), savedInstanceState);
-        if (Security.checkRoot()) {
+        if (Security.isDeviceRooted()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Внимание!")
                     .setMessage("Не проводите важные операции на данном устростве")
@@ -55,7 +56,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             AlertDialog alert = builder.create();
             alert.show();
         }
-        if (!Security.checkWifiSecurity()) {
+        if (InternetConnection.checkNetworkStatus() && Security.checkWifiSecurity()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Внимание!")
                     .setMessage("Вы подключены к небезопасной wifi сети")

@@ -27,25 +27,25 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private final Function<T, String> mIdMapper;
     private HashMap<String, T> mItems;
     private final Type mType;
-    private Encryption mEncryption;
-    
+
+
     JsonEndpoint(@NonNull Function<T, String> idMapper, @NonNull String filename, @NonNull Context context, @NonNull Type type) {
         this.mGson = GsonFactory.createDatabase();
         this.mIdMapper = idMapper;
         this.mFilename = PREFIX_NAME + filename;
         this.mContext = context;
         this.mType = type;
-        this.mEncryption = Encryption.getDefault("Key", "Salt", new byte[16]);
     }
-    
+
     public final synchronized void saveItems(@NonNull List<T> items) {
         if (mItems == null) restore();
         for (T item : items) {
             mItems.put(this.mIdMapper.apply(item), item);
         }
+
         save();
     }
-    
+
     @Override
     public void saveItem(@NonNull T item) {
         if (this.mItems == null) restore();
@@ -88,7 +88,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
                 try {
                     outputStream.close();
                 } catch (IOException e3) {
-                    
+
                 }
             }
         }
@@ -113,7 +113,7 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
                 try {
                     fileInputStream.close();
                 } catch (IOException e) {
-                    
+
                 }
             }
         } catch (Throwable e2) {
@@ -121,18 +121,17 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
                 try {
                     fileInputStream.close();
                 } catch (IOException e3) {
-                    
+
                 }
             }
         }
         try {
             this.mItems = this.mGson.fromJson(Security.decrypt(stringBuilder.toString()), this.mType);
         } catch (Throwable e2) {
-            
+
         }
         if (this.mItems == null) {
             this.mItems = new HashMap<>();
         }
     }
-    
 }

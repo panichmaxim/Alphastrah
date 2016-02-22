@@ -43,59 +43,59 @@ public final class SimpleStorage {
         return localInstance;
     }
 
-    public final SecretKeySpec getCryptoKey() {
+    public final byte[] getCryptoKey() {
         if (!mPreferences.contains(CRYPTOKEY)) return null;
-        return new SecretKeySpec(Base64.decode(mPreferences.getString(CRYPTOKEY, ""), Base64.DEFAULT), "AES");
+        return Base64.decode(mPreferences.getString(CRYPTOKEY, ""), Base64.DEFAULT);
     }
 
-    public final void saveCryptoKey(SecretKeySpec key) {
+    public final void saveCryptoKey(byte[] key) {
         SharedPreferences.Editor ed = mPreferences.edit();
-        ed.putString(CRYPTOKEY, Base64.encodeToString(key.getEncoded(), Base64.DEFAULT));
+        ed.putString(CRYPTOKEY, Base64.encodeToString(key, Base64.DEFAULT));
         ed.commit();
     }
 
-    public final void logout() throws Exception {
+    public final void logout() {
         setPassword(null);
         saveAuthInfo(null, null);
     }
 
-    public final void saveAuthInfo(NWSession session, NWAccount account) {
+    public final void saveAuthInfo(NWSession session, NWAccount account)  {
         String sessionJson = this.mGson.toJson(session);
         String accountJson = this.mGson.toJson(account);
         SharedPreferences.Editor ed = mPreferences.edit();
         if (session != null) {
-            ed.putString(TOKEN, session.getToken());
+            ed.putString(TOKEN, Security.encrypt(session.getToken()));
         } else {
             ed.putString(TOKEN, null);
         }
-        ed.putString(SESSION, sessionJson);
-        ed.putString(ACCOUNT, accountJson);
+        ed.putString(SESSION, Security.encrypt(sessionJson));
+        ed.putString(ACCOUNT, Security.encrypt(accountJson));
         ed.commit();
     }
 
-    public String getToken() {
-        return this.mPreferences.getString(TOKEN, null);
+    public String getToken()  {
+        return Security.decrypt(this.mPreferences.getString(TOKEN, null));
     }
 
-    public NWSession getSession() {
-        return this.mGson.fromJson(this.mPreferences.getString(SESSION, null), NWSession.class);
+    public NWSession getSession()  {
+        return this.mGson.fromJson(Security.decrypt(this.mPreferences.getString(SESSION, null)), NWSession.class);
     }
 
-    public NWAccount getAccount() {
-        return this.mGson.fromJson(this.mPreferences.getString(ACCOUNT, null), NWAccount.class);
+    public NWAccount getAccount()  {
+        return this.mGson.fromJson(Security.decrypt(this.mPreferences.getString(ACCOUNT, null)), NWAccount.class);
     }
 
-    public boolean isAuthorized() {
+    public boolean isAuthorized()  {
         return !TextUtils.isEmpty(getToken());
     }
 
-    public final void setPassword(String password) throws Exception {
+    public final void setPassword(String password)  {
         SharedPreferences.Editor ed = mPreferences.edit();
         ed.putString(PASSWORD, Security.encrypt(password));
         ed.commit();
     }
 
-    public final String getPassword() throws Exception {
+    public final String getPassword() {
         return Security.decrypt(this.mPreferences.getString(PASSWORD, null));
     }
 

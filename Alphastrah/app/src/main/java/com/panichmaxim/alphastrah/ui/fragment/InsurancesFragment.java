@@ -2,8 +2,12 @@ package com.panichmaxim.alphastrah.ui.fragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +20,8 @@ import com.panichmaxim.alphastrah.controller.adapter.InsurancesListAdapter;
 import com.panichmaxim.alphastrah.controller.adapter.SimpleSectionedRecyclerViewAdapter;
 import com.panichmaxim.alphastrah.model.utils.InsurancesListData;
 import com.panichmaxim.alphastrah.presenter.InsurancesPresenter;
+import com.panichmaxim.alphastrah.ui.activity.NotificationsActivity;
+import com.panichmaxim.alphastrah.ui.activity.SendEmailActivity;
 import com.panichmaxim.alphastrah.ui.view.InsurancesView;
 import com.redmadrobot.chronos.ChronosConnector;
 
@@ -62,6 +68,11 @@ public class InsurancesFragment extends MvpLceFragment<SwipeRefreshLayout, Insur
     public void onPause() {
         super.onPause();
         mConnector.onPause();
+    }
+
+    @OnClick(R.id.fab)
+    public void fabButtonClick() {
+        getActivity().startActivity(new Intent(getActivity(), SendEmailActivity.class));
     }
 
     @Override

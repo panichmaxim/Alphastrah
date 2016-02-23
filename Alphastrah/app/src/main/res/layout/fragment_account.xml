@@ -18,8 +18,8 @@
             android:layout_marginRight="17dp"
             android:layout_marginTop="17dp"
             android:text="ФИО"
-            android:textColor="#000"
-            android:textSize="18sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_size" />
 
         <com.panichmaxim.alphastrah.ui.utils.FontTextView
             android:id="@+id/fio_textview"
@@ -29,8 +29,8 @@
             android:layout_marginRight="17dp"
             android:layout_marginTop="5dp"
             android:text="Фио value"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:textColor="@color/background_material_dark"
+            android:textSize="@dimen/description_size" />
 
         <View
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="15dp"
-            android:background="#25000000" />
+            android:background="@color/transparent_grey" />
 
         <com.panichmaxim.alphastrah.ui.utils.FontTextView
             android:layout_width="fill_parent"
@@ -46,8 +46,8 @@
             android:layout_marginLeft="17dp"
             android:layout_marginRight="17dp"
             android:text="Телефон"
-            android:textColor="#000"
-            android:textSize="18sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_size" />
 
         <com.panichmaxim.alphastrah.ui.utils.FontTextView
             android:id="@+id/phone_textview"
@@ -57,8 +57,8 @@
             android:layout_marginRight="17dp"
             android:layout_marginTop="5dp"
             android:text="Телефон value"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:textColor="@color/background_material_dark"
+            android:textSize="@dimen/description_size" />
 
         <View
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="15dp"
-            android:background="#25000000" />
+            android:background="@color/transparent_grey" />
 
         <com.panichmaxim.alphastrah.ui.utils.FontTextView
             android:layout_width="fill_parent"
@@ -74,8 +74,8 @@
             android:layout_marginLeft="17dp"
             android:layout_marginRight="17dp"
             android:text="Электронная почта"
-            android:textColor="#000"
-            android:textSize="18sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_size" />
 
         <com.panichmaxim.alphastrah.ui.utils.FontTextView
             android:id="@+id/email_textview"
@@ -85,8 +85,16 @@
             android:layout_marginRight="17dp"
             android:layout_marginTop="5dp"
             android:text="Email value"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:textColor="@color/background_material_dark"
+            android:textSize="@dimen/description_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/transparent_grey" />
 
     </LinearLayout>
 </ScrollView>

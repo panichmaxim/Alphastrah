@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Alphastrah</string>
-
     <string name="navigation_drawer_open">Открыть navigation drawer</string>
     <string name="navigation_drawer_close">Закрыть navigation drawer</string>
     <string name="title_profile">Профиль</string>
@@ -9,7 +8,7 @@
     <string name="title_loading">Загрузка</string>
     <string name="title_activity_notifications">Уведомления</string>
     <string name="data_load_error">Ошибка при загрузке данных</string>
-    <!-- Strings related to login -->
+    <!-- Strings related to forms (login, send email) -->
     <string name="login_error">Ошибка при авторизации</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Пароль</string>
@@ -19,4 +18,8 @@
     <string name="error_incorrect_password">Неверный пароль</string>
     <string name="error_field_required">Обязательное поле</string>
 
+    <string name="title_activity_send_email">Отправить email</string>
+    <string name="action_send">Отправить</string>
+    <string name="prompt_subject">Заголовок</string>
+    <string name="prompt_body">Сообщение</string>
 </resources>

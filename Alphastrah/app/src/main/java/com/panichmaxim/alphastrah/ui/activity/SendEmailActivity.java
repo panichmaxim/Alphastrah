@@ -3,7 +3,6 @@ package com.panichmaxim.alphastrah.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -14,7 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SendEmailActivity extends AppCompatActivity {
+public class SendEmailActivity extends BaseActivity {
 
     @Bind(R.id.subject) EditText mSubjectView;
     @Bind(R.id.body) EditText mBodyView;

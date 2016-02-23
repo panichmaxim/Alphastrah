@@ -15,7 +15,7 @@ import com.panichmaxim.alphastrah.ui.fragment.AccountFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
+public class MenuActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.drawer_layout) DrawerLayout mDrawer;
 
@@ -33,8 +33,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.profile_fragment).setOnClickListener(this);
         findViewById(R.id.policies_fragment).setOnClickListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new InsurancesFragment()).commit();
-        setTitle(getString(R.string.title_policies));
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new InsurancesFragment()).commit();
+            setTitle(getString(R.string.title_policies));
+        }
     }
 
     @Override

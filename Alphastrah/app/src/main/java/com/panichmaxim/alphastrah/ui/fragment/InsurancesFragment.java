@@ -5,6 +5,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;

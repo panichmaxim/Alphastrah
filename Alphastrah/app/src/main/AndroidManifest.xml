@@ -32,6 +32,10 @@
         <activity
             android:name=".ui.activity.SendEmailActivity"
             android:label="@string/title_activity_send_email"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.AccountActivity"
+            android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

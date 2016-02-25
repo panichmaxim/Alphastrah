@@ -50,13 +50,6 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
         mItems.put(this.mIdMapper.apply(item), item);
         save();
     }
-
-    @Override
-    public void saveItem(@NonNull T item) {
-        if (this.mItems == null) restore();
-        mItems.put(this.mIdMapper.apply(item), item);
-        save();
-    }
     
     @NonNull
     public final synchronized List<T> getItems() {

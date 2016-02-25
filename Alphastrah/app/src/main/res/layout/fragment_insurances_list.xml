@@ -1,40 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<include xmlns:android="http://schemas.android.com/apk/res/android"
+    layout="@layout/fragment_insurances_list_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <com.panichmaxim.alphastrah.ui.utils.FontTextView
-        android:id="@+id/errorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:drawablePadding="16dp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:textColor="#656565"
-        android:textSize="20sp" />
-
-    <ProgressBar
-        android:id="@+id/loadingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true" />
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/contentView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-
-</FrameLayout>
+    android:layout_height="match_parent" />

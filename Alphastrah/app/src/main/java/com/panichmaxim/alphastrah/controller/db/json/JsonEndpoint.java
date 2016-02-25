@@ -28,7 +28,6 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
     private HashMap<String, T> mItems;
     private final Type mType;
 
-
     JsonEndpoint(@NonNull Function<T, String> idMapper, @NonNull String filename, @NonNull Context context, @NonNull Type type) {
         this.mGson = GsonFactory.createDatabase();
         this.mIdMapper = idMapper;
@@ -42,7 +41,13 @@ public final class JsonEndpoint<T> implements DatabaseEndpoint<T> {
         for (T item : items) {
             mItems.put(this.mIdMapper.apply(item), item);
         }
+        save();
+    }
 
+    @Override
+    public void saveItem(@NonNull T item) {
+        if (this.mItems == null) restore();
+        mItems.put(this.mIdMapper.apply(item), item);
         save();
     }
 

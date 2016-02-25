@@ -9,6 +9,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,9 +41,12 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // TODO extend base activity
+        if (getResources().getBoolean(R.bool.portrait_only)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         ButterKnife.bind(this);
         mConnector.onCreate(getPresenter(), savedInstanceState);
-
         if (Security.isDeviceRooted()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Внимание!")
@@ -57,7 +61,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             AlertDialog alert = builder.create();
             alert.show();
         }
-
         if (InternetConnection.checkNetworkStatus() && Security.checkWifiSecurity()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Внимание!")

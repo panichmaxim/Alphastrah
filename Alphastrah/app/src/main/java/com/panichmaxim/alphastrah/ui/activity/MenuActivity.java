@@ -7,10 +7,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.ui.fragment.InsurancesFragment;
-
+import com.panichmaxim.alphastrah.utils.AnimationController;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -55,7 +54,7 @@ public class MenuActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(this, AccountActivity.class));
                 break;
             case R.id.policies_fragment:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new InsurancesFragment()).commit();
+                AnimationController.makeTransaction(getSupportFragmentManager().beginTransaction().replace(R.id.container, new InsurancesFragment()));
                 setTitle(getString(R.string.title_policies));
                 break;
         }

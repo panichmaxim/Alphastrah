@@ -23,7 +23,7 @@ import com.redmadrobot.chronos.ChronosConnector;
 
 import java.util.ArrayList;
 
-public class NotificationsActivity extends AppCompatActivity {
+public class NotificationsActivity extends BaseActivity {
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 

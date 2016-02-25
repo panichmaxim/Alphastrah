@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.panichmaxim.alphastrah.ui.utils.FontTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/title_fio"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_size" />
+
+    <com.panichmaxim.alphastrah.ui.utils.FontTextView
+        android:id="@+id/fio_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="5dp"
+        android:text="Фио value"
+        android:textColor="@color/background_material_dark"
+        android:textSize="@dimen/description_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/transparent_grey" />
+
+    <com.panichmaxim.alphastrah.ui.utils.FontTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:text="@string/title_phone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_size" />
+
+    <com.panichmaxim.alphastrah.ui.utils.FontTextView
+        android:id="@+id/phone_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="5dp"
+        android:text="Телефон value"
+        android:textColor="@color/background_material_dark"
+        android:textSize="@dimen/description_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/transparent_grey" />
+
+    <com.panichmaxim.alphastrah.ui.utils.FontTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:text="@string/title_email"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_size" />
+
+    <com.panichmaxim.alphastrah.ui.utils.FontTextView
+        android:id="@+id/email_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="5dp"
+        android:text="Email value"
+        android:textColor="@color/background_material_dark"
+        android:textSize="@dimen/description_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/transparent_grey" />
+
+</LinearLayout>

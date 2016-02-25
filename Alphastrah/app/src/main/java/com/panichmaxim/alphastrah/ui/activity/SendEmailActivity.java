@@ -48,7 +48,7 @@ public class SendEmailActivity extends BaseActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts( "mailto", "maxim6665@yandex.ru", null));
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts( "mailto", "test_testov1910@mail.ru", null));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
             emailIntent.putExtra(Intent.EXTRA_TEXT, body);
             startActivity(Intent.createChooser(emailIntent, "Send email..."));

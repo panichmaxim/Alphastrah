@@ -24,7 +24,6 @@
 
     </LinearLayout>
 
-
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -69,11 +68,8 @@
                 android:text="@string/title_policies"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="10dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
         </ScrollView>
     </android.support.design.widget.NavigationView>
-
-
 </android.support.v4.widget.DrawerLayout>

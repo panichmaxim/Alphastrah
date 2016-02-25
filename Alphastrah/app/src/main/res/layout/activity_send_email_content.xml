@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/send_form"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/vertical_margin"
+    android:paddingLeft="@dimen/horizontal_margin"
+    android:paddingRight="@dimen/horizontal_margin"
+    android:paddingTop="@dimen/vertical_margin">
+
+    <LinearLayout
+        android:id="@+id/subject_login_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.panichmaxim.alphastrah.ui.utils.FontEditText
+                android:id="@+id/subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_subject"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout>
+
+        <com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.panichmaxim.alphastrah.ui.utils.FontEditText
+                android:id="@+id/body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_body" />
+
+        </com.panichmaxim.alphastrah.ui.utils.FontTextInputLayout>
+
+        <Button
+            android:id="@+id/send_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/action_send"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

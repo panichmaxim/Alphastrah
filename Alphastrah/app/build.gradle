@@ -27,7 +27,7 @@ ext.supportVersion = '23.1.1'
 ext.mosbyVersion = '2.0.0'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
@@ -42,4 +42,5 @@ dependencies {
     compile 'com.annimon:stream:1.0.6'
     compile 'se.simbio.encryption:library:1.2.0'
     compile 'com.redmadrobot:chronos:1.0.5'
+    compile files('libs/activation.jar')
 }

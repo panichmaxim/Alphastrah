@@ -9,7 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import com.panichmaxim.alphastrah.R;
 import com.panichmaxim.alphastrah.ui.fragment.InsurancesFragment;
-import com.panichmaxim.alphastrah.utils.AnimationController;
+import com.panichmaxim.alphastrah.ui.utils.AnimationController;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

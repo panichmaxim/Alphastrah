@@ -1,4 +1,4 @@
-package com.panichmaxim.alphastrah.utils;
+package com.panichmaxim.alphastrah.ui.utils;
 
 import android.support.v4.app.FragmentTransaction;
 import com.panichmaxim.alphastrah.R;

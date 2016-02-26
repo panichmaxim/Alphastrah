@@ -1,7 +1,6 @@
 package com.panichmaxim.alphastrah.ui.activity;
 
-import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -9,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import com.panichmaxim.alphastrah.R;
+import com.panichmaxim.alphastrah.controller.operations.SendEmailTask;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,10 +49,11 @@ public class SendEmailActivity extends BaseActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts( "mailto", "test_testov1910@mail.ru", null));
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            emailIntent.putExtra(Intent.EXTRA_TEXT, body);
-            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+//            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts( "mailto", "test_testov1910@mail.ru", null));
+//            emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+//            emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+//            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            new SendEmailTask(subject, body, this).execute();
         }
     }
 

@@ -29,10 +29,10 @@ public class SendEmailTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... arg0) {
         try {
-            GMailSender sender = new GMailSender("makar8883@gmail.com", "9303443pm");
+            GMailSender sender = new GMailSender("****", "****");
             sender.sendMail(subject,
                     body,
-                    "maxim6665@yandex.ru");
+                    "***");
         } catch (Exception e) {
             Log.e("SendMail", e.getMessage(), e);
         }
